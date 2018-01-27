@@ -16,21 +16,29 @@ var T = new Twit({
 
 var stream = T.stream('statuses/sample')
 
-
+let params = { q: '#disney', count: 100, until: '2018-01-19'  }
+// let params = { q: 'yes since:2011-07-11', count: 3, until: '2018-01-19'  }
 //q is used for the search, count is how many tweets, time...etc
 //use time ago 5 min for 3 months
 router.route('/')
-T.get('search/tweets', { q: 'yes since:2011-07-11', count: 10 }, function(err, data, response) {
-  console.log(data, data.statuses[0].created_at)
+T.get('search/tweets', params, function(err, data, response) {
+  let tweets = data.statuses;
+  let formattedData = {}
+  for(var i = 0; i < tweets.length; i++){
+    formattedData = {
+      id: tweets[i].id,
+      user: tweets[i].user.screen_name,
+      message: tweets[i].text,
+      time: tweets[i].created_at
+    }
+    console.log(formattedData)
+
+  }
+  //data.statuses.user ==== all data about user
+  // console.log(data)
   // res.save(777)
 })
 //set up schema here to format data to be saved to the db//
-
-//////TWEET overload, needs filtering//////
-// stream.on('tweet', function (tweet) {
-//   console.log(tweet, 'tweet!!!')
-// })
-///////////////////////////////////////
 
   // .get(ProfileController.getAll) //running methods from controllers/profiles.js
   // .post(ProfileController.create)
