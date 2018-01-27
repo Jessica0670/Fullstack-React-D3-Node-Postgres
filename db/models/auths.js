@@ -9,6 +9,7 @@ const Auth = db.Model.extend({
   },
 
   initialize: function() {
+    console.log('initialize line 12 models.auths.js')
     this.on('saving', (user, attrs, options) => {
       if (user.get('type') === 'local') {
         return this.generatePassword(user.get('password'))

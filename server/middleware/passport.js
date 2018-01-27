@@ -34,6 +34,11 @@ passport.use('local-signup', new LocalStrategy({
 },
   (req, email, password, done) => {
     // check to see if there is any account with this email address
+    // console.log('inside cb of use.localstrategy line 37')// works
+    //gathers req email and password here
+    console.log(email, 'line 81')
+
+    // console.log('request: ', req, email, password) but stops here
     return models.Profile.where({ email }).fetch()
       .then(profile => {
         // create a new profile if a profile does not exist
@@ -48,6 +53,7 @@ passport.use('local-signup', new LocalStrategy({
         return profile;
       })
       .tap(profile => {
+
         // create a new local auth account with the user's profile id
         return models.Auth.forge({
           password,
@@ -106,12 +112,13 @@ passport.use('local-login', new LocalStrategy({
         done(null, null, req.flash('loginMessage', 'Incorrect username or password'));
       });
   }));
-
+//configuring strategy
 passport.use('google', new GoogleStrategy({
   clientID: config.Google.clientID,
   clientSecret: config.Google.clientSecret,
   callbackURL: config.Google.callbackURL
 },
+//problem here?
   (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, done))
 );
 
@@ -135,11 +142,13 @@ passport.use('twitter', new TwitterStrategy({
 );
 
 const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
+  console.log('inside get or create function line 139', oauthProfile.name.givenName, oauthProfile.name.familyName, oauthProfile.emails)
   return models.Auth.where({ type, oauth_id: oauthProfile.id }).fetch({
     withRelated: ['profile']
   })
     .then(oauthAccount => {
-
+      console.log('inside .then line 144')
+//////////no oauth account!///////
       if (oauthAccount) {
         throw oauthAccount;
       }
@@ -161,12 +170,14 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
 
       if (profile) {
         //update profile with info from oauth
+        console.log(profile, 'profile line 166')
         return profile.save(profileInfo, { method: 'update' });
       }
       // otherwise create new profile
       return models.Profile.forge(profileInfo).save();
     })
     .tap(profile => {
+      console.log('line 173')
       return models.Auth.forge({
         type,
         profile_id: profile.get('id'),
@@ -174,9 +185,11 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
       }).save();
     })
     .error(err => {
+      console.log('error 181')
       done(err, null);
     })
     .catch(oauthAccount => {
+      console.log('catch 185')
       if (!oauthAccount) {
         throw oauthAccount;
       }

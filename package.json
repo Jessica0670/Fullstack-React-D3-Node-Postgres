@@ -23,17 +23,19 @@
     "express": "^4.15.2",
     "express-session": "^1.15.1",
     "grunt-pg": "https://github.com/watsoncj/grunt-pg.git",
-    "knex": "^0.12.9",
+    "knex": "^0.14.2",
     "morgan": "^1.8.1",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "passport-google-oauth": "^1.0.0",
+    "passport-google-oauth20": "^1.0.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
     "pg": "^6.1.5",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "redis": "^2.7.1"
+    "redis": "^2.7.1",
+    "twit": "^2.2.9"
   },
   "devDependencies": {
     "babel-loader": "^7.0.0",
