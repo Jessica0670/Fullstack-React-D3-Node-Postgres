@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 
+
 router.route('/')
   .get((req, res) => {
     res.status(200).send('Hello World!');
@@ -12,3 +13,5 @@ router.route('/')
   });
 
 module.exports = router;
+
+// app.listen(3000, () => console.log('Twitter app listening on port 3000!'))
