@@ -1,5 +1,5 @@
 const knex = require('knex')(require('../../knexfile'));
-
+// const environment = process.env.NODE_ENV || 'development'
 exports.rollbackMigrate = (done) => {
   knex.migrate.rollback()
     .then(function () {

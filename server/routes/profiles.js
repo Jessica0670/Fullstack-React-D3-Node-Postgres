@@ -16,7 +16,7 @@ var T = new Twit({
 
 var stream = T.stream('statuses/sample')
 
-let params = { q: '#disney', count: 100, until: '2018-01-19'  }
+let params = { q: 'bob', count: 3, until: '2018-01-19'  }
 // let params = { q: 'yes since:2011-07-11', count: 3, until: '2018-01-19'  }
 //q is used for the search, count is how many tweets, time...etc
 //use time ago 5 min for 3 months
@@ -24,6 +24,7 @@ router.route('/')
 T.get('search/tweets', params, function(err, data, response) {
   let tweets = data.statuses;
   let formattedData = {}
+  // console.log(data.statuses[0].user.name)
   for(var i = 0; i < tweets.length; i++){
     formattedData = {
       id: tweets[i].id,
@@ -31,9 +32,11 @@ T.get('search/tweets', params, function(err, data, response) {
       message: tweets[i].text,
       time: tweets[i].created_at
     }
-    console.log(formattedData)
 
+    // console.log(formattedData)
   }
+
+console.log(data.statuses[0].user.name)
   //data.statuses.user ==== all data about user
   // console.log(data)
   // res.save(777)
