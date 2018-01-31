@@ -1,8 +1,8 @@
 const db = require('../');
 
 const Profile = db.Model.extend({
-  tableName: 'profiles',
-  auths: function() {
+  tableName: 'company',
+  auths: function() { //do i need this??
     return this.hasMany('Auth');
   }
 });

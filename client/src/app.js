@@ -1,4 +1,39 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-ReactDOM.render(<h1>Hello World from React</h1>, document.getElementById('root'));
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      company: {
+        id: 1,
+        name: 'Facebook!'
+      }
+    }
+  }
+
+  getCompany(){
+    $.ajax({
+      type: "GET",
+      url:'',
+      success: (data) => {
+        console.log('ajax success', data)
+      },
+      error: (err) => {
+        console.log('fail ajax', err)
+      }
+    })
+  }
+
+render () {
+  return (
+    <div>
+      <h3>{this.state.company.name}</h3>
+    </div>
+  )
+}
+
+}
+
+
+ReactDOM.render(<App />, document.getElementById('root'));

@@ -74,9 +74,12 @@ view: ps auxwww | grep postgres
 Use grunt to create a new database for your development and test environments:
 
 Development envronment: `grunt pgcreatedb:default`
+//create thesis_devel with no tables//^^^^^^^^^^^
+//////////////////////////////////////
+
 
 Other environments, specify like so: `NODE_ENV=test grunt pgcreatedb:default`
-
+//create thesis_test
 ### Run Migrations & Data Seeds
 
 In terminal, from the root directory:
@@ -84,15 +87,21 @@ In terminal, from the root directory:
 To migrate to the latest version, run:
 x
 `knex migrate:latest --env NODE_ENV`
-
+//add tables to db
 To rollback a version, run:
 
 `knex migrate:rollback --env NODE_ENV`
 
 To populate the database with seed data, run:
 
-`knex seed:run --env NODE_ENV`
+REVOKE CONNECT ON DATABASE thesis_devel FROM public;
+SELECT pg_terminate_backend(pg_stat_activity.pid)
+FROM pg_stat_activity
+WHERE pg_stat_activity.datname = 'thesis_devel';
 
+`knex seed:run --env NODE_ENV`
+//connect to seed file!
+psql -U jessicathompson thesis_devel < 20170326215143_initial.js
 Note: `--env NODE_ENV` may be omitted for development. For example, `knex migrate:latest` will run all migrations in the development environment, while `knex migrate:latest --env test` will migrate in the test environment.
 x
 ## Running the App

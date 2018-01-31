@@ -1,3 +1,3 @@
 const config = require('config');
-//put queries here???
+// const knex = require('knex')('developmentknex')
 module.exports = config['knex'];
