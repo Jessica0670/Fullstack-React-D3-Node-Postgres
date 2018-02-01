@@ -1,6 +1,5 @@
 const models = require('../../db/models');
 
-
 const middleware = require('../middleware');
 const Twit = require('twit');
 const helper = require('../controllers/profiles.js')
@@ -15,7 +14,7 @@ var T = new Twit({
 })
 
 let company = {}
-let message = []
+let messages = []
 let dummyMessages = [];
 //export variable with api data
 let params = { q: '#facebook', count: 10 }
@@ -23,15 +22,20 @@ let params = { q: '#facebook', count: 10 }
 
 //get twitter data
 module.exports.getT = (req, res) => {
-T.get('search/tweets', params, function(request, response) {
-  let tweets = response.statuses;
-  // let company = {};
-  // create dummy data
-    company.id = 1
-    company.name = "Facebook"
-    tweets.forEach(tweet => message.push(tweet.text))
-    console.log(message, '???????')
-    // res.render('index.ejs', {company})//////////////////not a function?
+T.get('search/tweets', params, function(error, data , response) {
+  if(error){
+    console.log(error, 'inside getT line 28')
+  } else {
+    let tweets = data.statuses;
+    // let company = {};
+    // create dummy data
+      company.id = 1
+      company.name = "Facebook"
+      tweets.forEach(tweet => messages.push(tweet.text))
+      // console.log(company, '???????')
+
+      res.render('index.ejs', {messages: messages})//////////////////not a function?
+  }
 });
 }
 

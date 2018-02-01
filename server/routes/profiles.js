@@ -16,7 +16,7 @@ app.set('view enginer', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
 
 router.route('/')
-.get(ProfileController.getAll) //running methods from controllers/profiles.js
+.get(ProfileController.getT) //running methods from controllers/profiles.js
 // .post(ProfileController.create)
   // T.get('search/tweets', params, function(err, data, res) {
   //   let tweets = data.statuses;
