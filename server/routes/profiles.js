@@ -29,16 +29,18 @@ let params = { q: '#facebook', count: 5 }
 //use time ago 5 min for 3 months
 let company = {}
 router.route('/')
-  T.get('search/tweets', params, function(err, data, res) {
-    let tweets = data.statuses;
-    // let company = {};
-    // create dummy data
-      company.id = 1
-      company.name = "Facebook"
-      console.log(company)
-      // res.json(company)///why doesnt res.json work?
-
-  });
+.get(ProfileController.getAll) //running methods from controllers/profiles.js
+// .post(ProfileController.create)
+  // T.get('search/tweets', params, function(err, data, res) {
+  //   let tweets = data.statuses;
+  //   // let company = {};
+  //   // create dummy data
+  //     company.id = 1
+  //     company.name = "Facebook"
+  //     console.log(company)
+  //     // res.json(company)///why doesnt res.json work?
+  //
+  // });
     // response.render("company", {company: companyData});
 //next get tweets about the company to render with ejs
 
@@ -78,8 +80,7 @@ router.route('/')
 
 
 
-  // .get(ProfileController.getAll) //running methods from controllers/profiles.js
-  // .post(ProfileController.create)
+
 
 router.route('/:id')
   .get(ProfileController.getOne)

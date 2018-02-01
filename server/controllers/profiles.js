@@ -3,7 +3,13 @@ const models = require('../../db/models');
 module.exports.getAll = (req, res) => {
   models.Profile.fetchAll()
     .then(profiles => {
-      res.status(200).send(profiles);
+      // console.log(profiles.models[0].attributes)
+      let companyTable = []
+      profiles.models.forEach(item => {
+        companyTable.push(item.attributes)
+      })
+      console.log(companyTable) //company objects/table
+      res.render('index.ejs');
     })
     .catch(err => {
       // This code indicates an outside service (the database) did not respond in time
