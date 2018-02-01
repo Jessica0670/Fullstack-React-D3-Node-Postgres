@@ -2,6 +2,6 @@
 // const app = express()
 
 
-module.exports.Profiles = require('./profiles');
+module.exports.Company = require('./profiles');
 
 // app.listen(3000, () => console.log('Example app listening on port 3000!'))

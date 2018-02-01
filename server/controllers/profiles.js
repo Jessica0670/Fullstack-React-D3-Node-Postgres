@@ -1,21 +1,75 @@
 const models = require('../../db/models');
 
-  module.exports.getAll = (req, res) => {
-    models.Profile.where({score: -5}).fetchAll( //filter api data here
 
-      //select * from tweet where (with related tweet)
-      {withRelated:['company']}
-    ) ///constraints here!!
-      .then(profiles => {
-        // console.log(profiles.models[0].attributes)
-        let companyTable = []
-        profiles.models.forEach(item => {
-          console.log(item.attributes, 'llll')
-          companyTable.push(item.attributes)
-        })
-        // console.log(companyTable) //company objects/table
-        res.render('index.ejs');
+const middleware = require('../middleware');
+const Twit = require('twit');
+const helper = require('../controllers/profiles.js')
+
+var T = new Twit({
+  consumer_key:         'hPwQLGT14IDfrhKJ6FtjVYni7',
+  consumer_secret:      'RE1jam20D7J4whwh94TT1vPddPfyhq8Gye5DQZAoXqFI5fdO3t',
+  access_token:         '957040105226555392-VCJq4UtXbn5xqG8jsWUHSm4zFKMzuc0',
+  access_token_secret:  'DrGtYziXg38BaNmvlj2w9JkaXQffciScncga0ANSSJwcF',
+  timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
+                                  //can i use this for storing data every 5 min
+})
+
+let company = {}
+let message = []
+let params = { q: '#facebook', count: 10 }
+
+module.exports.getT = (req, res) => {
+T.get('search/tweets', params, function(req, res) {
+  let tweets = res.statuses;
+  // let company = {};
+  // create dummy data
+    company.id = 1
+    company.name = "Facebook"
+    tweets.forEach(tweet => message.push(tweet.text))
+    console.log(message, '???????')
+    // res.render('index.ejs')//////////////////not a function?
+});
+}
+
+
+
+
+module.exports.getAll = (req, res) => {
+  models.Profile.where({score: -5}).fetchAll(
+
+    //select * from tweet where (with related tweet)
+    {withRelated:['company']}
+  ) ///constraints here!!
+    .then(profiles => {
+      // console.log(profiles.models[0].attributes)
+      let companyTable = []
+      profiles.models.forEach(item => {
+        console.log(item.attributes, 'llll')
+        companyTable.push(item.attributes)
       })
+      // console.log(companyTable) //company objects/table
+      res.render('index.ejs');
+    })
+    .catch(err => {
+      // This code indicates an outside service (the database) did not respond in time
+      console.log('getAll error')
+      res.status(503).send(err);
+    });
+};
+
+module.exports.addTweet = (req, res) => {
+  console.log('ADDED!!')
+  models.Profile.forge({ message: res.statuses.text })
+    .save()
+    .then(result => {
+      console.log('inside promise line 21')
+      res.status(201).send(result);
+    })
+    .catch(err => {
+      if (err) {
+        res.status(500).send(err);
+      }
+    });
 };
 
 module.exports.create = (req, res) => {
@@ -67,6 +121,8 @@ module.exports.update = (req, res) => {
       res.sendStatus(404);
     });
 };
+
+
 
 // module.exports.deleteOne = (req, res) => {
 //   models.Profile.where({ id: req.params.id }).fetch()

@@ -11,7 +11,6 @@ const connectionString = process.env.DATABASE_URL || 'postgres://localhost:3000/
 const middleware = require('../middleware');
 const Twit = require('twit');
 const helper = require('../controllers/profiles.js')
-
 //
 app.set('view enginer', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
