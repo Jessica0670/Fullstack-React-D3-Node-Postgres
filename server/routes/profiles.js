@@ -12,38 +12,18 @@ const middleware = require('../middleware');
 const Twit = require('twit');
 const helper = require('../controllers/profiles.js')
 
-var T = new Twit({
-  consumer_key:         'hPwQLGT14IDfrhKJ6FtjVYni7',
-  consumer_secret:      'RE1jam20D7J4whwh94TT1vPddPfyhq8Gye5DQZAoXqFI5fdO3t',
-  access_token:         '957040105226555392-VCJq4UtXbn5xqG8jsWUHSm4zFKMzuc0',
-  access_token_secret:  'DrGtYziXg38BaNmvlj2w9JkaXQffciScncga0ANSSJwcF',
-  timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
-                                  //can i use this for storing data every 5 min
-})
+
 //
 app.set('view enginer', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
-//
 
-let params = { q: '#facebook', count: 10 }
-//use time ago 5 min for 3 months
-let company = {}
-let message = []
 router.route('/')
+  .get(ProfileController.getT)
 //render index page
   // .get(middleware.auth.verify, (req, res) => {
   //   res.render('index.ejs');
   // });
-T.get('search/tweets', params, function(req, res) {
-  let tweets = res.statuses;
-  // let company = {};
-  // create dummy data
-    company.id = 1
-    company.name = "Facebook"
-    tweets.forEach(tweet => message.push(tweet.text))
-    console.log(message)
-    // res.render('index.ejs', {company: company})//////////////////not a function?
-});
+
 
   // .get(ProfileController.getAll)  //running methods from controllers/profiles, gets all companies?
   // .post(ProfileController.addTweet)
