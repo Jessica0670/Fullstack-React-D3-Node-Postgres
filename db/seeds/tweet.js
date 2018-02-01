@@ -1,4 +1,5 @@
 let data = require('../../server/controllers/profiles')
+//require controller file for api data variable here
 exports.seed = function(knex, Promise) {
   return knex('tweet').del()
     .then(function () {

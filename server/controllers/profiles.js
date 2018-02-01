@@ -17,7 +17,7 @@ var T = new Twit({
 let company = {}
 let message = []
 let dummyMessages = [];
-
+//export variable with api data
 let params = { q: '#facebook', count: 10 }
 
 
