@@ -36,11 +36,10 @@ T.get('search/tweets', params, function(request, response) {
 
 //get and filter messages from the db
 module.exports.getAll = (req, res) => {
-  console.log(message, 'line 38')
-  models.Profile.where({score: -5}).fetchAll(
+  models.Company.where({score: -5}).fetchAll( //filter api data here
 
     //select * from tweet where (with related tweet)
-    {withRelated:['company']}
+    // {withRelated:['company']}
   ) ///constraints here!!
     .then(profiles => {
       // console.log(profiles.models[0].attributes)
