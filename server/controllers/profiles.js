@@ -18,7 +18,8 @@ let company = {}
 let message = []
 let params = { q: '#facebook', count: 10 }
 
-//send messages to the db
+
+//get twitter data
 module.exports.getT = (req, res) => {
 T.get('search/tweets', params, function(request, response) {
   let tweets = response.statuses;
@@ -32,6 +33,25 @@ T.get('search/tweets', params, function(request, response) {
 });
 }
 
+//send messages to the db
+module.exports.postData = (req, res) => {
+  // console.log('here')
+  // message.push(this.getT());
+  console.log('here')
+  console.log('ADDED!!')
+  models.Profile.forge({ message: res })
+    .save()
+    .then(result => {
+      console.log('inside promise line 21')
+      res.status(201).send(result);
+    })
+    .catch(err => {
+      if (err) {
+        console.log(err)
+        res.status(500).send(err);
+      }
+    });
+}
 
 
 //get and filter messages from the db
