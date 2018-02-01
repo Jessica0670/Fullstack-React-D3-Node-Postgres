@@ -18,23 +18,25 @@ let company = {}
 let message = []
 let params = { q: '#facebook', count: 10 }
 
+//send messages to the db
 module.exports.getT = (req, res) => {
-T.get('search/tweets', params, function(req, res) {
-  let tweets = res.statuses;
+T.get('search/tweets', params, function(request, response) {
+  let tweets = response.statuses;
   // let company = {};
   // create dummy data
     company.id = 1
     company.name = "Facebook"
     tweets.forEach(tweet => message.push(tweet.text))
     console.log(message, '???????')
-    // res.render('index.ejs')//////////////////not a function?
+    // res.render('index.ejs', {company})//////////////////not a function?
 });
 }
 
 
 
-
+//get and filter messages from the db
 module.exports.getAll = (req, res) => {
+  console.log(message, 'line 38')
   models.Profile.where({score: -5}).fetchAll(
 
     //select * from tweet where (with related tweet)
