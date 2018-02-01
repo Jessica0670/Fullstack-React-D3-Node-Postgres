@@ -1,18 +1,24 @@
 const models = require('../../db/models');
 
 module.exports.getAll = (req, res) => {
-  models.Profile.fetchAll()
+  models.Profile.where({score: -5}).fetchAll(
+
+    //select * from tweet where (with related tweet)
+    {withRelated:['company']}
+  ) ///constraints here!!
     .then(profiles => {
       // console.log(profiles.models[0].attributes)
       let companyTable = []
       profiles.models.forEach(item => {
+        console.log(item.attributes, 'llll')
         companyTable.push(item.attributes)
       })
-      console.log(companyTable) //company objects/table
+      // console.log(companyTable) //company objects/table
       res.render('index.ejs');
     })
     .catch(err => {
       // This code indicates an outside service (the database) did not respond in time
+      console.log('getAll error')
       res.status(503).send(err);
     });
 };

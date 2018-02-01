@@ -1,7 +1,7 @@
 'use strict';
 const express = require('express');
 const router = express.Router();
-const ProfileController = require('../controllers').Profiles; //requiring the methods
+const ProfileController = require('../controllers').Company; //requiring the methods
 const config = require('../../config/development.json')
 const app = express() //
 const path = require('path')//

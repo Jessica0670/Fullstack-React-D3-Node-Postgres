@@ -1,10 +1,19 @@
 const db = require('../');
 
-const Profile = db.Model.extend({
+const Company = db.Model.extend({
   tableName: 'company',
-  auths: function() { //do i need this??
-    return this.hasMany('Auth');
+
+  tweet: function() {
+    return this.hasMany('Tweet');
   }
 });
 
-module.exports = db.model('Profile', Profile);
+const Tweet = db.Model.extend({
+  tableName: 'tweet',
+  company: function() {
+    return this.belongsTo(Company);
+  }
+});
+
+module.exports = db.model('Company', Company);
+module.exports = db.model('Tweet', Tweet);
