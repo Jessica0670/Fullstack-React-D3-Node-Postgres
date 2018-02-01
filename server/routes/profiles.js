@@ -1,7 +1,7 @@
 'use strict';
 const express = require('express');
 const router = express.Router();
-const ProfileController = require('../controllers').Company; //requiring the methods
+const ProfileController = require('../controllers').Profile; //requiring the methods
 const config = require('../../config/development.json')
 const app = express() //
 const path = require('path')//
@@ -12,11 +12,6 @@ const middleware = require('../middleware');
 const Twit = require('twit');
 const helper = require('../controllers/profiles.js')
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 62c14c04701260e83dfe777605cdc6ed66be79eb
-//
 app.set('view enginer', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
 
