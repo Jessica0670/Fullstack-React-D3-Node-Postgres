@@ -16,6 +16,8 @@ var T = new Twit({
 
 let company = {}
 let message = []
+let dummyMessages = [];
+
 let params = { q: '#facebook', count: 10 }
 
 
@@ -65,11 +67,12 @@ module.exports.getAll = (req, res) => {
       // console.log(profiles.models[0].attributes)
       let companyTable = []
       profiles.models.forEach(item => {
-        console.log(item.attributes, 'llll')
+        // console.log(item.attributes, 'llll')
         companyTable.push(item.attributes)
+        dummyMessages.push(item.attributes.message)
       })
-      // console.log(companyTable) //company objects/table
-      res.render('index.ejs');
+      console.log(dummyMessages, 'dummy') //company objects/table
+      res.render('index.ejs', {dummyMessages});
     })
     .catch(err => {
       // This code indicates an outside service (the database) did not respond in time
