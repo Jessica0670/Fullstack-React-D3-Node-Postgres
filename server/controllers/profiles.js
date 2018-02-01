@@ -1,13 +1,30 @@
 const models = require('../../db/models');
 
 module.exports.getAll = (req, res) => {
+  console.log('GET ALLLLLL')
   models.Profile.fetchAll()
     .then(profiles => {
+      // console.log()
       res.status(200).send(profiles);
     })
     .catch(err => {
       // This code indicates an outside service (the database) did not respond in time
       res.status(503).send(err);
+    });
+};
+
+module.exports.addTweet = (req, res) => {
+  console.log('ADDED!!')
+  models.Profile.forge({ message: res.statuses.text })
+    .save()
+    .then(result => {
+      console.log('inside promise line 21')
+      res.status(201).send(result);
+    })
+    .catch(err => {
+      if (err) {
+        res.status(500).send(err);
+      }
     });
 };
 
@@ -60,6 +77,8 @@ module.exports.update = (req, res) => {
       res.sendStatus(404);
     });
 };
+
+
 
 // module.exports.deleteOne = (req, res) => {
 //   models.Profile.where({ id: req.params.id }).fetch()

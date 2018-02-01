@@ -8,7 +8,7 @@ const path = require('path')//
 const pg = require('pg')
 
 const connectionString = process.env.DATABASE_URL || 'postgres://localhost:3000/';
-
+const middleware = require('../middleware');
 const Twit = require('twit');
 const helper = require('../controllers/profiles.js')
 
@@ -25,20 +25,33 @@ app.set('view enginer', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
 //
 
-let params = { q: '#facebook', count: 5 }
+let params = { q: '#facebook', count: 10 }
 //use time ago 5 min for 3 months
 let company = {}
+let message = []
 router.route('/')
-  T.get('search/tweets', params, function(err, data, res) {
-    let tweets = data.statuses;
-    // let company = {};
-    // create dummy data
-      company.id = 1
-      company.name = "Facebook"
-      console.log(company)
-      // res.json(company)///why doesnt res.json work?
+//render index page
+  // .get(middleware.auth.verify, (req, res) => {
+  //   res.render('index.ejs');
+  // });
+T.get('search/tweets', params, function(req, res) {
+  let tweets = res.statuses;
+  // let company = {};
+  // create dummy data
+    company.id = 1
+    company.name = "Facebook"
+    tweets.forEach(tweet => message.push(tweet.text))
+    console.log(message)
+    // res.render('index.ejs', {company: company})//////////////////not a function?
+});
 
-  });
+  // .get(ProfileController.getAll)  //running methods from controllers/profiles, gets all companies?
+  // .post(ProfileController.addTweet)
+
+//   .get((req, res) => {
+//     console.log(res, 'test')
+//   })
+
     // response.render("company", {company: companyData});
 //next get tweets about the company to render with ejs
 
@@ -78,9 +91,6 @@ router.route('/')
 
 
 
-  // .get(ProfileController.getAll) //running methods from controllers/profiles.js
-  // .post(ProfileController.create)
-
 router.route('/:id')
   .get(ProfileController.getOne)
   .put(ProfileController.update)
@@ -88,3 +98,4 @@ router.route('/:id')
   ;
 
 module.exports = router;
+// module.exports = message;
