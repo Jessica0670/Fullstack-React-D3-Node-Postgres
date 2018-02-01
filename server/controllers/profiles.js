@@ -1,5 +1,47 @@
 const models = require('../../db/models');
 
+
+const middleware = require('../middleware');
+const Twit = require('twit');
+const helper = require('../controllers/profiles.js')
+
+var T = new Twit({
+  consumer_key:         'hPwQLGT14IDfrhKJ6FtjVYni7',
+  consumer_secret:      'RE1jam20D7J4whwh94TT1vPddPfyhq8Gye5DQZAoXqFI5fdO3t',
+  access_token:         '957040105226555392-VCJq4UtXbn5xqG8jsWUHSm4zFKMzuc0',
+  access_token_secret:  'DrGtYziXg38BaNmvlj2w9JkaXQffciScncga0ANSSJwcF',
+  timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
+                                  //can i use this for storing data every 5 min
+})
+
+let company = {}
+let message = []
+let params = { q: '#facebook', count: 10 }
+
+module.exports.getT = (req, res) => {
+T.get('search/tweets', params, function(req, res) {
+  let tweets = res.statuses;
+  // let company = {};
+  // create dummy data
+    company.id = 1
+    company.name = "Facebook"
+    tweets.forEach(tweet => message.push(tweet.text))
+    console.log(message, '???????')
+    // res.render('index.ejs')//////////////////not a function?
+});
+}
+
+// module.exports.postT = (req, res) => {
+//
+//   T.post((req, res) => {
+//     console.log('in post line 32')
+//   })
+// }
+
+
+
+
+
 module.exports.getAll = (req, res) => {
   console.log('GET ALLLLLL')
   models.Profile.fetchAll()
