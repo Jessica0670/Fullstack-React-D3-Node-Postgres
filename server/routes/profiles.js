@@ -67,13 +67,6 @@ router.route('/')
 
 
 
-
-
-<<<<<<< HEAD
-=======
-
-
->>>>>>> b836db3fb228df64abb68d9696bb62f0f140b34e
 router.route('/:id')
   .get(ProfileController.getOne)
   .put(ProfileController.update)
