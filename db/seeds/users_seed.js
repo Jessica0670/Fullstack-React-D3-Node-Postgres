@@ -1,13 +1,14 @@
 const models = require('../models');
 
 exports.seed = function (knex, Promise) {
-
+  console.log
   return models.Profile.where({ email: 'admin@domain.com' }).fetch()
     .then((profile) => {
       if (profile) {
         throw profile;
       }
-      return models.Profile.forge({
+      return models.Profile.forge({ //forge is same as "new"
+        //change this to the api data!!
         first: 'System',
         last: 'Admin',
         display: 'Administrator',
