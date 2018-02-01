@@ -40,7 +40,7 @@ module.exports.getAll = (req, res) => {
   models.Profile.where({score: -5}).fetchAll( //filter api data here
 
     //select * from tweet where (with related tweet)
-    {withRelated:['company']}
+    // {withRelated:['company']}
   ) ///constraints here!!
     .then(profiles => {
       // console.log(profiles.models[0].attributes)
