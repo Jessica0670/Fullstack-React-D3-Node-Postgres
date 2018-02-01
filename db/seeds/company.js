@@ -7,7 +7,8 @@ exports.seed = function(knex, Promise) {
       return knex('company').insert([
         {id: 1, name: 'Facebook'},
         {id: 2, name: 'Microsoft'},
-        {id: 3, name: 'Android'}
+        {id: 3, name: 'Android'},
+        {id: 4, name: 'Samsung'}
       ]);
     });
 };

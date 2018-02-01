@@ -34,7 +34,7 @@ T.get('search/tweets', params, function(error, data , response) {
       tweets.forEach(tweet => messages.push(tweet.text))
       // console.log(company, '???????')
 
-      res.render('index.ejs', {messages: messages})//////////////////not a function?
+      res.render('company.ejs', {messages: messages, company: company})//////////////////not a function?
   }
 });
 }
@@ -170,3 +170,5 @@ module.exports.update = (req, res) => {
 //       res.sendStatus(404);
 //     });
 // };
+
+// module.exports = messages;

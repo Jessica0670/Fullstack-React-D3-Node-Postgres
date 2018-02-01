@@ -17,7 +17,7 @@ exports.up = function (knex, Promise) {
     }),
     knex.schema.createTableIfNotExists('tweet', function (table) {
       table.increments('id').unsigned().primary(); //how to add unique id
-      table.string('message', 250).nullable();
+      table.string('message', 9999).nullable();
       table.string('time', 10).nullable();
       table.string('score', 250).nullable(); //number or string??
       // table.uuid( 'userId').references( 'id' ).inTable( 'company' );
