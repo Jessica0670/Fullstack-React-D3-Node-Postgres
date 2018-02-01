@@ -1,7 +1,7 @@
 'use strict';
 const express = require('express');
 const router = express.Router();
-const ProfileController = require('../controllers').Profiles; //requiring the methods
+const ProfileController = require('../controllers').Company; //requiring the methods
 const config = require('../../config/development.json')
 const app = express() //
 const path = require('path')//
@@ -18,20 +18,18 @@ app.set('view enginer', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
 
 router.route('/')
-  .get(ProfileController.getT)
-//render index page
-  // .get(middleware.auth.verify, (req, res) => {
-  //   res.render('index.ejs');
+.get(ProfileController.getAll) //running methods from controllers/profiles.js
+// .post(ProfileController.create)
+  // T.get('search/tweets', params, function(err, data, res) {
+  //   let tweets = data.statuses;
+  //   // let company = {};
+  //   // create dummy data
+  //     company.id = 1
+  //     company.name = "Facebook"
+  //     console.log(company)
+  //     // res.json(company)///why doesnt res.json work?
+  //
   // });
-
-
-  // .get(ProfileController.getAll)  //running methods from controllers/profiles, gets all companies?
-  // .post(ProfileController.addTweet)
-
-//   .get((req, res) => {
-//     console.log(res, 'test')
-//   })
-
     // response.render("company", {company: companyData});
 //next get tweets about the company to render with ejs
 
@@ -71,6 +69,11 @@ router.route('/')
 
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> b836db3fb228df64abb68d9696bb62f0f140b34e
 router.route('/:id')
   .get(ProfileController.getOne)
   .put(ProfileController.update)
