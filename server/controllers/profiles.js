@@ -31,8 +31,10 @@ T.get('search/tweets', params, function(error, data , response) {
     // create dummy data
       company.id = 1
       company.name = "Facebook"
-      tweets.forEach(tweet => messages.push(tweet.text))
-      // console.log(company, '???????')
+      tweets.forEach(tweet => {
+        messages.push(tweet.text)
+      })
+      console.log(messages.length, '???????')
 
       res.render('company.ejs', {messages: messages, company: company})//////////////////not a function?
   }
