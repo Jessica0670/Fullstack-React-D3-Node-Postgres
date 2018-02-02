@@ -1,16 +1,10 @@
 <% include head.ejs%>
 
-    <div class="page-header text-center">
-        <h1><span class="fa fa-anchor"></span> Profile Page</h1>
-        <a href="/" class="btn btn-default btn-sm">Home page</a>
-        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
-    </div>
-
 
     <div class="row">
 
         <!-- LOCAL INFORMATION -->
-        <div class="col-sm-6">
+        <div class="col-sm-3">
             <div class="well">
                 <h3><span class="fa fa-user"></span><%= company.name %></h3>
 
@@ -22,10 +16,20 @@
         </div>
 
 
-        <div class="col-sm-6">
+        <div class="col-sm-9">
             <div class="well">
-
-                <%= messages %>
+              <ul style="list-style-type:none">
+              <% for(var i = 0; i < messages.length; i++){ %>
+                <li style="margin-top: 15px;
+                padding: 10px;
+                -webkit-box-shadow: 0 7px 4px #777;
+                -moz-box-shadow: 0 7px 4px #777;
+                box-shadow: 0 7px 4px #777;
+                background-color: white;">
+                <%= messages[i] %>
+              </li>
+                <% } %>
+              </ul>
 
             </div>
         </div>
