@@ -13,12 +13,18 @@ var T = new Twit({
                                   //can i use this for storing data every 5 min
 })
 
+
+// app.locals({
+//     test: {
+//         title: 'ExpressBootstrapEJS'
+//     }
+// });
+
 let company = {}
 let messages = []
 let dummyMessages = [];
 //export variable with api data
 let params = { q: '#facebook', count: 10 }
-
 
 //get twitter data
 module.exports.getT = (req, res) => {
@@ -41,7 +47,7 @@ T.get('search/tweets', params, function(error, data , response) {
 });
 }
 
-//send messages to the db
+//send messages to the db //or send to seed with global var
 module.exports.postData = (req, res) => {
   // console.log('here')
   // message.push(this.getT());
