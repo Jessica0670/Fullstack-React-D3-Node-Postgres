@@ -74,7 +74,7 @@ view: ps auxwww | grep postgres
 Use grunt to create a new database for your development and test environments:
 
 Development envronment: `grunt pgcreatedb:default`
-//create thesis_devel with no tables//^^^^^^^^^^^
+//create thesis_devel db with no tables//^^^^^^^^^^^
 //////////////////////////////////////
 
 

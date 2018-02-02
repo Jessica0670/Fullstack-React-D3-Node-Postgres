@@ -20,8 +20,8 @@ var T = new Twit({
 //     }
 // });
 
-let company = {}
-let messages = []
+let company = {};
+let messages = [];
 let dummyMessages = [];
 //export variable with api data
 let params = { q: '#facebook', count: 10 }
@@ -40,8 +40,9 @@ T.get('search/tweets', params, function(error, data , response) {
       tweets.forEach(tweet => {
         messages.push(tweet.text)
       })
-      console.log(messages.length, '???????')
-
+      console.log(messages[0], '???????')
+      // module.exports.getAll() //works
+      module.exports.tweets = tweets;
       res.render('company.ejs', {messages: messages, company: company})//////////////////not a function?
   }
 });
@@ -71,6 +72,7 @@ module.exports.postData = (req, res) => {
 //get and filter messages from the db
 module.exports.getAll = (req, res) => {
   console.log('inside getAll')
+  // console.log(messages)//works
   models.Profile.where({companyId: 1}).fetchAll( //filter api data here
     //select * from tweet where (with related tweet)
     {withRelated:['company']}
@@ -84,7 +86,8 @@ module.exports.getAll = (req, res) => {
         dummyMessages.push(item.attributes.message)
       })
       console.log(dummyMessages, 'dummy') //company objects/table
-      res.render('index.ejs', {dummyMessages});
+      //change to api data?
+      // res.render('index.ejs', {dummyMessages});
     })
     .catch(err => {
       // This code indicates an outside service (the database) did not respond in time
@@ -178,5 +181,5 @@ module.exports.update = (req, res) => {
 //       res.sendStatus(404);
 //     });
 // };
-
-// module.exports = messages;
+module.exports.test = "test";
+// module.exports.messages = messages;
