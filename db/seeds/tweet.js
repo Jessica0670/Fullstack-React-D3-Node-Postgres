@@ -3,7 +3,7 @@ let tweet = data.messages;
 let test = data.test;
 //require controller file for api data variable here
 exports.seed = function(knex, data, Promise) {
-  console.log('inside tweet seed file')
+  console.log('inside tweet seed file', data[0].text)
   return knex('tweet')
     .then(function () {
       return knex('tweet').insert(
