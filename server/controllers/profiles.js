@@ -13,13 +13,6 @@ var T = new Twit({
                                   //can i use this for storing data every 5 min
 })
 
-
-// app.locals({
-//     test: {
-//         title: 'ExpressBootstrapEJS'
-//     }
-// });
-
 let company = {};
 let messages = [];
 let res = []; //for post data
@@ -29,36 +22,69 @@ let params = { q: '#facebook', count: 10 }
 
 
 
-//get twitter data
-module.exports.getT = (req, res) => {
+//get twitter data and send to db
+module.exports.getT = (req, resp) => {
 T.get('search/tweets', params, function(error, data , response) {
     let tweets = data.statuses;
     // create dummy data
-      company.id = 1
-      company.name = "Facebook"
+      // company.id = 1
+      // company.name = "Facebook"
       console.log(tweets[0].text)
       tweets.forEach(tweet => {
         messages.push(tweet)
       })
-      // console.log(messages[0].text)
+      console.log(messages[0].text)
       // let promise = new Promise;
       tweetSeed.seed(knex, messages)
-      module.exports.getAll()
-      res.render('company.ejs', {messages: messages, company: company})
+      // module.exports.render()
+      // res.render('company.ejs', {company: company})
   // }
 });
 }
 
-//send messages to the db //or send to seed with global var
-module.exports.postData = (req, res) => {
-  // console.log('here')
-  // message.push(this.getT());
-  console.log('here')
-  console.log('ADDED!!')
-  console.log(messages)
+module.exports.render = (req, res) => {
+  console.log('inside render')
+  module.exports.getT()
+  // console.log(messages)//works
+  models.Profile.fetchAll() ///constraints here!!
+    .then(profiles => {
+      // console.log(profiles, 'inside promise')
+      company.id = 1
+      company.name = "Facebook"
+      let renderData = [];
+      profiles.models.forEach(item => {
+        // console.log(item, 'inside foreach')
+        if(renderData.length <= 10){
+          renderData.push(item.attributes)
+        } else {
+          renderData.splice(0, 1)
+          renderData.push(item.attributes)
+        }
+        // console.log(renderData[0], 'render data item 0')
+      })
+
+     //   let arr = renderData
+     // for(var i = 0; i < arr.length; i++){
+     //   arr = Array.from(new Set(arr))
+     //   // arr.sort(function(a, b) { return - ( b.id - a.id)});
+     //  if(arr.length > 10) {
+     //   arr.splice(0, 1)
+     //   }
+     //
+     //   console.log(arr[i].id, arr[i].message , 'lkjhgfcx')
+     //
+     //   }
+
+      // console.log(res, 'response')
+      res.render('body.ejs', {renderData: renderData, company: company})
+    })
+    .catch(err => {
+      // This code indicates an outside service (the database) did not respond in time
+      console.log('rendering error')
+      res.status(503).send(err);
+    });
 
 }
-
 
 //get and filter messages from the db!! works
 module.exports.getAll = (req, res) => {
@@ -87,6 +113,15 @@ module.exports.getAll = (req, res) => {
       res.status(503).send(err);
     });
 };
+
+// module.exports.postData = (req, res) => {
+//   // console.log('here')
+//   // message.push(this.getT());
+//   console.log('here')
+//   console.log('ADDED!!')
+//   console.log(messages)
+//
+// }
 
 module.exports.addTweet = (req, res) => {
   console.log('ADDED!!')

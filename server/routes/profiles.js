@@ -16,23 +16,8 @@ app.set('view enginer', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
 
 router.route('/')
-.get(ProfileController.getT) //running methods from controllers/profiles.js
-// .post(ProfileController.postData)
-  // T.get('search/tweets', params, function(err, data, res) {
-  //   let tweets = data.statuses;
-  //   // let company = {};
-  //   // create dummy data
-  //     company.id = 1
-  //     company.name = "Facebook"
-  //     console.log(company)
-  //     // res.json(company)///why doesnt res.json work?
-  //
-  // });
-    // response.render("company", {company: companyData});
-//next get tweets about the company to render with ejs
-
-
-
+.get(ProfileController.render) //running methods from controllers/profiles.js
+// .get(ProfileController.render)
   // let formattedData = {}
   // for(var i = 0; i < tweets.length; i++){
   //   formattedData = {

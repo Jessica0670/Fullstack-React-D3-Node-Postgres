@@ -28,10 +28,12 @@
         <div class="col-sm-9">
             <div class="well">
               <ul style="list-style-type:none; margin-right: 30px;">
-              <% for(var i = 0; i < renderData.length; i++){ %>
-                <% renderData = Array.from(new Set(renderData)) %>
-                <% if(renderData.length > 10) { %>
-                  <% renderData.splice(0, 1) %>
+                <% let arr = renderData %>
+              <% for(var i = 0; i < arr.length; i++){ %>
+                <% arr = Array.from(new Set(arr)) %>
+               <%  arr.sort(function(a, b) { return - ( b.id - a.id)}); %>
+                <% if(arr.length > 10) { %>
+                  <% arr.splice(0, 1) %>
                 <% } %>
                 <li style="margin-top: 15px;
                 padding: 10px;
@@ -39,7 +41,7 @@
                 -moz-box-shadow: 0 7px 4px #777;
                 box-shadow: 0 7px 4px #777;
                 background-color: white;">
-                <%= renderData[i].message %>
+                <%= arr[i].message %>
               </li>
                 <% } %>
               </ul>
