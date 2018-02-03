@@ -14,7 +14,6 @@ exports.seed = function(knex, data, Promise) {
         {message: data[3].text, time: '', score:'2', companyId: 1},
         {message: data[4].text, time: '', score:'2', companyId: 3},
         {message: data[5].text, time: '', score:'2', companyId: 3}
-        // {id: 7, message: messages[0].text, time: '', score:'2', companyId: 1}
       ]
     );
     })

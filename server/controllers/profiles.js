@@ -26,56 +26,33 @@ let params = { q: '#facebook', count: 10 }
 module.exports.getT = (req, resp) => {
 T.get('search/tweets', params, function(error, data , response) {
     let tweets = data.statuses;
-    // create dummy data
-      // company.id = 1
-      // company.name = "Facebook"
       console.log(tweets[0].text)
       tweets.forEach(tweet => {
         messages.push(tweet)
       })
       console.log(messages[0].text)
-      // let promise = new Promise;
       tweetSeed.seed(knex, messages)
-      // module.exports.render()
-      // res.render('company.ejs', {company: company})
-  // }
 });
 }
 
+
+//render data from db
 module.exports.render = (req, res) => {
   console.log('inside render')
   module.exports.getT()
-  // console.log(messages)//works
   models.Profile.fetchAll() ///constraints here!!
     .then(profiles => {
-      // console.log(profiles, 'inside promise')
       company.id = 1
       company.name = "Facebook"
       let renderData = [];
       profiles.models.forEach(item => {
-        // console.log(item, 'inside foreach')
         if(renderData.length <= 10){
           renderData.push(item.attributes)
         } else {
           renderData.splice(0, 1)
           renderData.push(item.attributes)
         }
-        // console.log(renderData[0], 'render data item 0')
       })
-
-     //   let arr = renderData
-     // for(var i = 0; i < arr.length; i++){
-     //   arr = Array.from(new Set(arr))
-     //   // arr.sort(function(a, b) { return - ( b.id - a.id)});
-     //  if(arr.length > 10) {
-     //   arr.splice(0, 1)
-     //   }
-     //
-     //   console.log(arr[i].id, arr[i].message , 'lkjhgfcx')
-     //
-     //   }
-
-      // console.log(res, 'response')
       res.render('body.ejs', {renderData: renderData, company: company})
     })
     .catch(err => {
