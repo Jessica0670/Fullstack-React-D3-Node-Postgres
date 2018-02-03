@@ -43,7 +43,7 @@ T.get('search/tweets', params, function(error, data , response) {
       // console.log(messages[0].text)
       // let promise = new Promise;
       tweetSeed.seed(knex, messages)
-
+      module.exports.getAll()
       res.render('company.ejs', {messages: messages, company: company})
   // }
 });
@@ -56,25 +56,11 @@ module.exports.postData = (req, res) => {
   console.log('here')
   console.log('ADDED!!')
   console.log(messages)
-  // models.Profile.forge({ message: messages })
-  //   .save()
-  //   .then(result => {
-  //     result.attributes.message.forEach(item => {
-  //       res.push(item)
-  //     })
-  //     // console.log('inside promise line 61', res.text)
-  //     res.status(201);
-  //   })
-  //   .catch(err => {
-  //     if (err) {
-  //       console.log(err)
-  //       res.status(500).send(err);
-  //     }
-  //   });
+
 }
 
 
-//get and filter messages from the db
+//get and filter messages from the db!! works
 module.exports.getAll = (req, res) => {
   console.log('inside getAll')
   // console.log(messages)//works
@@ -92,7 +78,8 @@ module.exports.getAll = (req, res) => {
       })
       console.log(dummyMessages, 'dummy') //company objects/table
       //change to api data?
-      // res.render('index.ejs', {dummyMessages});
+      // res.render('company.ejs', {messages: dummyMessages, company: company})
+      //^^^^^^ not working yet to filter for rendering
     })
     .catch(err => {
       // This code indicates an outside service (the database) did not respond in time
