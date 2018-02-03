@@ -17,7 +17,7 @@ app.set('views', path.join(__dirname, 'views'))
 
 router.route('/')
 .get(ProfileController.getT) //running methods from controllers/profiles.js
-// .post(ProfileController.create)
+// .post(ProfileController.postData)
   // T.get('search/tweets', params, function(err, data, res) {
   //   let tweets = data.statuses;
   //   // let company = {};

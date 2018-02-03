@@ -1,9 +1,9 @@
 const models = require('../../db/models');
-
+const tweetSeed = require('../../db/seeds/tweet.js')
 const middleware = require('../middleware');
 const Twit = require('twit');
 const helper = require('../controllers/profiles.js')
-
+const knex  = require('knex')(require('../../knexfile'));
 var T = new Twit({
   consumer_key:         'hPwQLGT14IDfrhKJ6FtjVYni7',
   consumer_secret:      'RE1jam20D7J4whwh94TT1vPddPfyhq8Gye5DQZAoXqFI5fdO3t',
@@ -22,29 +22,30 @@ var T = new Twit({
 
 let company = {};
 let messages = [];
+let res = []; //for post data
 let dummyMessages = [];
 //export variable with api data
 let params = { q: '#facebook', count: 10 }
 
+
+
 //get twitter data
 module.exports.getT = (req, res) => {
 T.get('search/tweets', params, function(error, data , response) {
-  if(error){
-    console.log(error, 'inside getT line 28')
-  } else {
     let tweets = data.statuses;
-    // let company = {};
     // create dummy data
       company.id = 1
       company.name = "Facebook"
+      console.log(tweets[0].text)
       tweets.forEach(tweet => {
-        messages.push(tweet.text)
+        messages.push(tweet)
       })
-      console.log(messages[0], '???????')
-      // module.exports.getAll() //works
-      module.exports.tweets = tweets;
-      res.render('company.ejs', {messages: messages, company: company})//////////////////not a function?
-  }
+      // console.log(messages[0].text)
+      // let promise = new Promise;
+      tweetSeed.seed(knex, messages)
+
+      res.render('company.ejs', {messages: messages, company: company})
+  // }
 });
 }
 
@@ -54,18 +55,22 @@ module.exports.postData = (req, res) => {
   // message.push(this.getT());
   console.log('here')
   console.log('ADDED!!')
-  models.Profile.forge({ message: res })
-    .save()
-    .then(result => {
-      console.log('inside promise line 21')
-      res.status(201).send(result);
-    })
-    .catch(err => {
-      if (err) {
-        console.log(err)
-        res.status(500).send(err);
-      }
-    });
+  console.log(messages)
+  // models.Profile.forge({ message: messages })
+  //   .save()
+  //   .then(result => {
+  //     result.attributes.message.forEach(item => {
+  //       res.push(item)
+  //     })
+  //     // console.log('inside promise line 61', res.text)
+  //     res.status(201);
+  //   })
+  //   .catch(err => {
+  //     if (err) {
+  //       console.log(err)
+  //       res.status(500).send(err);
+  //     }
+  //   });
 }
 
 
@@ -73,7 +78,7 @@ module.exports.postData = (req, res) => {
 module.exports.getAll = (req, res) => {
   console.log('inside getAll')
   // console.log(messages)//works
-  models.Profile.where({companyId: 1}).fetchAll( //filter api data here
+  models.Profile.where({companyId: 1}).fetchAll( //filter api data here from pg
     //select * from tweet where (with related tweet)
     {withRelated:['company']}
   ) ///constraints here!!
@@ -182,4 +187,4 @@ module.exports.update = (req, res) => {
 //     });
 // };
 module.exports.test = "test";
-// module.exports.messages = messages;
+module.exports.messages = messages;
