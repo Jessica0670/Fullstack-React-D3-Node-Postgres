@@ -18,22 +18,37 @@ let messages = [];
 let res = []; //for post data
 let dummyMessages = [];
 //export variable with api data
-let params = { q: '#facebook', count: 10 }
+let params = { q: '#facebook', count: 100 }
 
 
 
 //get twitter data and send to db
+// module.exports.getT = (req, resp) => {
+// T.get('search/tweets', params, function(error, data , response) {
+//     let tweets = data.statuses;
+//       console.log(tweets[0].text)
+//       tweets.forEach(tweet => {
+//         messages.push(tweet)
+//       })
+//       console.log(messages[0].text)
+//       tweetSeed.seed(knex, messages)
+// });
+// }
+//get twitter data and send to db
 module.exports.getT = (req, resp) => {
-T.get('search/tweets', params, function(error, data , response) {
-    let tweets = data.statuses;
-      console.log(tweets[0].text)
-      tweets.forEach(tweet => {
-        messages.push(tweet)
-      })
-      console.log(messages[0].text)
-      tweetSeed.seed(knex, messages)
-});
+  // var stream = T.stream('statuses/filter', { track: 'facebook,Facebook,#facebook,#Facebook' })
+
+  stream.on('tweet', function (tweet) {
+    tweetSeed.seed(knex, tweet.text)
+    // console.log(tweet.text, 'streaming')
+    // console.log(tweet.user.created_at, 'time')
+  })
+  // console.log(tweet.user.extended_tweet, 'streaming')
+
+        // tweetSeed.seed(knex, messages)
+
 }
+
 
 
 //render data from db
