@@ -39,7 +39,7 @@ module.exports.getT = (req, resp) => {
   // var stream = T.stream('statuses/filter', { track: 'facebook,Facebook,#facebook,#Facebook' })
 
   stream.on('tweet', function (tweet) {
-    tweetSeed.seed(knex, tweet.text)
+    tweetSeed.seed(knex, tweet)
     // console.log(tweet.text, 'streaming')
     // console.log(tweet.user.created_at, 'time')
   })
