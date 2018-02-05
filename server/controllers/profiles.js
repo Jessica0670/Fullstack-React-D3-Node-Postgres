@@ -34,19 +34,13 @@ let params = { q: '#facebook', count: 100 }
 //       tweetSeed.seed(knex, messages)
 // });
 // }
-//get twitter data and send to db
-module.exports.getT = (req, resp) => {
+//STREAM twitter data and send to db
+module.exports.getStream = (req, resp) => {
   // var stream = T.stream('statuses/filter', { track: 'facebook,Facebook,#facebook,#Facebook' })
-
   stream.on('tweet', function (tweet) {
+    //change tweet to messages?? to work with getT
     tweetSeed.seed(knex, tweet)
-    // console.log(tweet.text, 'streaming')
-    // console.log(tweet.user.created_at, 'time')
   })
-  // console.log(tweet.user.extended_tweet, 'streaming')
-
-        // tweetSeed.seed(knex, messages)
-
 }
 
 
@@ -54,7 +48,7 @@ module.exports.getT = (req, resp) => {
 //render data from db
 module.exports.render = (req, res) => {
   console.log('inside render')
-  module.exports.getT()
+  module.exports.getStream()
   models.Profile.fetchAll() ///constraints here!!
     .then(profiles => {
       company.id = 1
@@ -66,6 +60,12 @@ module.exports.render = (req, res) => {
         } else {
           renderData.splice(0, 1)
           renderData.push(item.attributes)
+          // console.log(renderData, 'rendering data')
+          // { id: 2694,
+          //   message: '@ccciru Si la buscas por el buscador de facebook t aparece gorda !!!',
+          //   time: 2018-02-05T20:15:15.000Z,
+          //   score: '5',
+          //   companyId: 1 }
         }
       })
       res.render('body.ejs', {renderData: renderData, company: company})
