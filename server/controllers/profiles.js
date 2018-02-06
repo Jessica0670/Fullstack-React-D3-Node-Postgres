@@ -36,9 +36,17 @@ let params = { q: '#facebook', count: 100 }
 // }
 //STREAM twitter data and send to db
 module.exports.getStream = (req, resp) => {
-  // var stream = T.stream('statuses/filter', { track: 'facebook,Facebook,#facebook,#Facebook' })
+  let params = {
+    track: 'facebook,Facebook,#facebook,#Facebook',
+    // id: '2306250325,474763492,960421733021831200,960682751321022500'
+    // ,
+    language: 'en',
+    place: {country: 'United States'}
+  }
+  var stream = T.stream('statuses/filter', params)
   stream.on('tweet', function (tweet) {
     //change tweet to messages?? to work with getT
+    console.log(tweet)
     tweetSeed.seed(knex, tweet)
   })
 }

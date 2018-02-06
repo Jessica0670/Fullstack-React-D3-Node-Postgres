@@ -17,10 +17,7 @@
                 <h4 style="position: center">CEO</h4>
                 </center>
 
-
                 <a href="/unlink/local" class="btn btn-default">Unlink</a>
-
-
             </div>
         </div>
 
@@ -41,15 +38,16 @@
                 -moz-box-shadow: 0 7px 4px #777;
                 box-shadow: 0 7px 4px #777;
                 background-color: white;">
-                <%= arr[i].username %>
+                <b><%= arr[i].username %></b>
                 <br>
-                <%= arr[i].message %>
-                <br>
-                <%= arr[i].time %>
+                <p><%= arr[i].message %></p>
+
+                <i style="font-weight: 200; font-size: 12px;"><%= arr[i].time %></i>
               </li>
                 <% } %>
               </ul>
 
             </div>
+
         </div>
 <% include foot.ejs%>
