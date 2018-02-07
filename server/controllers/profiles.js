@@ -4,6 +4,8 @@ const middleware = require('../middleware');
 const Twit = require('twit');
 const helper = require('../controllers/profiles.js')
 const knex  = require('knex')(require('../../knexfile'));
+var sentiment = require('sentiment');
+
 var T = new Twit({
   consumer_key:         'hPwQLGT14IDfrhKJ6FtjVYni7',
   consumer_secret:      'RE1jam20D7J4whwh94TT1vPddPfyhq8Gye5DQZAoXqFI5fdO3t',
@@ -43,14 +45,47 @@ module.exports.getStream = (req, resp) => {
     language: 'en',
     place: {country: 'United States'}
   }
-  var stream = T.stream('statuses/filter', params)
+  // var stream = T.stream('statuses/filter', params)
   stream.on('tweet', function (tweet) {
     //change tweet to messages?? to work with getT
-    console.log(tweet)
+    // console.log(tweet)
     tweetSeed.seed(knex, tweet)
+    let phrase = tweet.text
+    sentiment(phrase, function (err, result) {
+        sentiResponse = 'sentiment(' + phrase + ') === ' + result.score;
+        // console.log(sentiResponse, 'inside sentiment')
+        // res.send(response);
+    });
   })
 }
 
+// app.get('/testSentiment',
+//     function (req, res) {
+//         var response = "<HEAD>" +
+//           "<title>Twitter Sentiment Analysis</title>\n" +
+//           "</HEAD>\n" +
+//           "<BODY>\n" +
+//           "<P>\n" +
+//           "Welcome to the Twitter Sentiment Analysis app.  " +
+//           "What phrase would you like to analzye?\n" +
+//           "</P>\n" +
+//           "<FORM action=\"/testSentiment\" method=\"get\">\n" +
+//           "<P>\n" +
+//           "Enter a phrase to evaluate: <INPUT type=\"text\" name=\"phrase\"><BR>\n" +
+//           "<INPUT type=\"submit\" value=\"Send\">\n" +
+//           "</P>\n" +
+//           "</FORM>\n" +
+//           "</BODY>";
+//         var phrase = req.query.phrase;
+//         if (!phrase) {
+//             res.send(response);
+//         } else {
+//             sentiment(phrase, function (err, result) {
+//                 response = 'sentiment(' + phrase + ') === ' + result.score;
+//                 res.send(response);
+//             });
+//         }
+//     });
 
 
 //render data from db

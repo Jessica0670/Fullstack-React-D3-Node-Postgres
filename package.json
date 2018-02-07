@@ -25,6 +25,7 @@
     "grunt-pg": "https://github.com/watsoncj/grunt-pg.git",
     "knex": "^0.14.2",
     "morgan": "^1.8.1",
+    "p5": "^0.6.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "passport-google-oauth": "^1.0.0",
@@ -35,6 +36,7 @@
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "redis": "^2.7.1",
+    "sentiment": "^4.2.0",
     "sqlite3": "^3.1.13",
     "twit": "^2.2.9",
     "webpack": "^3.10.0"

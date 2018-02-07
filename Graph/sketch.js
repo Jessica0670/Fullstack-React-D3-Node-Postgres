@@ -1,5 +1,5 @@
 let preload = () => {
-  let table = loadTable('AFINN-111.txt', 'tsv')
+  table = loadTable('AFINN-111.txt', 'tsv')
 }
 
 let setup = () => {
