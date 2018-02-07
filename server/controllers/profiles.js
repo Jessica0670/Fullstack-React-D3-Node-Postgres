@@ -20,7 +20,7 @@ let messages = [];
 let res = []; //for post data
 let dummyMessages = [];
 //export variable with api data
-let params = { q: '#facebook', count: 100 }
+// let params = { q: '#facebook', count: 100 }
 
 
 
@@ -46,46 +46,23 @@ module.exports.getStream = (req, resp) => {
     place: {country: 'United States'}
   }
   // var stream = T.stream('statuses/filter', params)
+  // var stream = T.stream('statuses/sample')
+
   stream.on('tweet', function (tweet) {
     //change tweet to messages?? to work with getT
     // console.log(tweet)
-    tweetSeed.seed(knex, tweet)
     let phrase = tweet.text
     sentiment(phrase, function (err, result) {
         sentiResponse = 'sentiment(' + phrase + ') === ' + result.score;
-        // console.log(sentiResponse, 'inside sentiment')
+        console.log(result.score, 'inside sentiment')
         // res.send(response);
-    });
-  })
-}
+        tweetSeed.seed(knex, tweet, result.score)
 
-// app.get('/testSentiment',
-//     function (req, res) {
-//         var response = "<HEAD>" +
-//           "<title>Twitter Sentiment Analysis</title>\n" +
-//           "</HEAD>\n" +
-//           "<BODY>\n" +
-//           "<P>\n" +
-//           "Welcome to the Twitter Sentiment Analysis app.  " +
-//           "What phrase would you like to analzye?\n" +
-//           "</P>\n" +
-//           "<FORM action=\"/testSentiment\" method=\"get\">\n" +
-//           "<P>\n" +
-//           "Enter a phrase to evaluate: <INPUT type=\"text\" name=\"phrase\"><BR>\n" +
-//           "<INPUT type=\"submit\" value=\"Send\">\n" +
-//           "</P>\n" +
-//           "</FORM>\n" +
-//           "</BODY>";
-//         var phrase = req.query.phrase;
-//         if (!phrase) {
-//             res.send(response);
-//         } else {
-//             sentiment(phrase, function (err, result) {
-//                 response = 'sentiment(' + phrase + ') === ' + result.score;
-//                 res.send(response);
-//             });
-//         }
-//     });
+    });
+
+  })
+
+}
 
 
 //render data from db
@@ -103,12 +80,6 @@ module.exports.render = (req, res) => {
         } else {
           renderData.splice(0, 1)
           renderData.push(item.attributes)
-          // console.log(renderData, 'rendering data')
-          // { id: 2694,
-          //   message: '@ccciru Si la buscas por el buscador de facebook t aparece gorda !!!',
-          //   time: 2018-02-05T20:15:15.000Z,
-          //   score: '5',
-          //   companyId: 1 }
         }
       })
       res.render('body.ejs', {renderData: renderData, company: company})
@@ -120,6 +91,26 @@ module.exports.render = (req, res) => {
     });
 
 }
+
+//filter data by company instead of id
+//render search data scores to d3
+module.exports.search = (req, res) => {
+  models.Profile.where({ id: req.params.id }).fetch()
+    .then(profile => {
+      if (!profile) {
+        throw profile;
+      }
+      res.status(200).send(profile);
+    })
+    .error(err => {
+      res.status(500).send(err);
+    })
+    .catch(() => {
+      res.sendStatus(404);
+    });
+};
+
+
 
 //get and filter messages from the db!! works
 module.exports.getAll = (req, res) => {

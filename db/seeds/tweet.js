@@ -2,14 +2,14 @@ let data = require('../../server/controllers/profiles')
 let tweet = data.messages;
 let test = data.test;
 //require controller file for api data variable here
-exports.seed = function(knex, data, Promise) {
+exports.seed = function(knex, data, score, Promise) {
   // console.log('inside tweet seed file', data[0].created_at)
   return knex('tweet')
   .then(function () {
     // console.log(data.user.screen_name, 'DATAAA')
     return knex('tweet').insert(
       [
-      {username:data.user.screen_name, message: data.text, time: data.created_at, score:'5', companyId: 1}
+      {username:data.user.screen_name, message: data.text, time: data.created_at, score:score, companyId: 1}
       // ,
       // {message: data[1].text, time: data[1].created_at, score:'-5', companyId: 1},
       // {message: data[2].text, time: data[2].created_at, score:'2', companyId: 2},
