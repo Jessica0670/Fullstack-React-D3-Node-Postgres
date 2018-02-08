@@ -10,16 +10,25 @@ class SVG extends React.Component {
   }
 
   onChange(e){
+    //update state
     this.setState({term: e.target.value})
     // console.log(this.state.term)
-    this.props.click(this.state.term)
+    console.log(this.state.term, 'TERM')
+    // this.buttonClick(this.state.term)
+    // this.props.click(this.state.term)
 
     //run fuction bound to app here as this.state.term as the param
   }
 
-  click(){
-    // this.props.click(this.state.term)
-    // this.onChange()
+  buttonClick(){
+    //onclick send state to app.js
+    console.log(this.state.term, 'CLICK')
+
+    this.props.click(this.state.term)
+
+    // this.props.click(term)
+    // console.log(term, 'term in component button click')
+    // this.onChange(this.state.term)
   }
 
   render() {
@@ -33,8 +42,7 @@ class SVG extends React.Component {
 
 <input type="text" value={this.state.term} onChange={this.onChange.bind(this)} placeholder="search..."></input>
 
-<button type="submit" onClick={this.props.click}>clickMe</button>
-<h1 onClick={() => this.props.click()}>click me</h1>
+<button type="submit" onClick={this.buttonClick.bind(this)}>clickMe</button>
 </div>
     )
   }

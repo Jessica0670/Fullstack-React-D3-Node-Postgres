@@ -13,17 +13,18 @@ class App extends React.Component {
     }
   }
 
-  requestData(data){
-    let term = data;
-    console.log(term, 'inside app.js')
+  requestData(term){
+    this.state.graphData = []
+console.log(term, 'DATA') //works ==> input data
     $.ajax({
       type: "GET",
-      url:'/id/'+data,
+      url:'/id/'+term,
       success: (data) => {
-        console.log('ajax success')
-        this.state.graphData = []
+        console.log('ajax success') //data = array of message and scores
+        // this.state.graphData = []
         for(var i = 0; i < data.length; i++){
           if(data[i].message.indexOf(term) >= 0){
+            console.log(data[i].message)
             this.state.graphData.push(data[i].score)
           }
         }
@@ -40,7 +41,7 @@ class App extends React.Component {
   render () {
     return (
       <div>
-        <SVG click={this.requestData.bind(this) graphData={this.state.graphData}}/>
+        <SVG click={this.requestData.bind(this)} graphData={this.state.graphData}/>
       </div>
     )
   }
