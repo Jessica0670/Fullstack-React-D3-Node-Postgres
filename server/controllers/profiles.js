@@ -40,8 +40,6 @@ let dummyMessages = [];
 module.exports.getStream = (req, resp) => {
   let params = {
     track: 'facebook,Facebook,#facebook,#Facebook',
-    // id: '2306250325,474763492,960421733021831200,960682751321022500'
-    // ,
     language: 'en',
     place: {country: 'United States'}
   }
@@ -54,7 +52,7 @@ module.exports.getStream = (req, resp) => {
     let phrase = tweet.text
     sentiment(phrase, function (err, result) {
         sentiResponse = 'sentiment(' + phrase + ') === ' + result.score;
-        console.log(result.score, 'inside sentiment')
+        // console.log(result.score, 'inside sentiment')
         // res.send(response);
         tweetSeed.seed(knex, tweet, result.score)
 
@@ -68,7 +66,7 @@ module.exports.getStream = (req, resp) => {
 //render data from db
 module.exports.render = (req, res) => {
   console.log('inside render')
-  module.exports.getStream()
+  //stream data to db
   models.Profile.fetchAll() ///constraints here!!
     .then(profiles => {
       company.id = 1
@@ -91,15 +89,19 @@ module.exports.render = (req, res) => {
     });
 
 }
-
 //filter data by company instead of id
 //render search data scores to d3
 module.exports.search = (req, res) => {
-  models.Profile.where({ id: req.params.id }).fetch()
+  // let string = value typed in search
+  console.log(req.params, 'params!!!!') //==> {id: '5555'} //change to string
+  models.Profile.where({ id: req.params.id
+    // , message contains string
+  }).fetchAll()
     .then(profile => {
       if (!profile) {
         throw profile;
       }
+      //res.render all data that match string
       res.status(200).send(profile);
     })
     .error(err => {

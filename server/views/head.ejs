@@ -10,11 +10,46 @@
     <!-- d3 -->
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <!-- p5 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.js"></script>
-    <script src="../../Graph/p5/sketch.js"></script>    <!--  -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.js"></script>
+    <script src="../../Graph/p5/sketch.js"></script> -->
+    <!-- AJAX/jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="jquery-3.3.1.min.js"></script>
+    <!-- react -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
     <style>
         /* body        { padding-top:80px; } */
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+<script type="text/babel">
+class Search extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      term: ''
+    }
+  }
+    render() {
+        return (
+          <div>
+          <p>Search:</p>
+
+        <input type="text" placeholder="company..."></input>
+        <button>AJAX</button>
+        </div>
+
+      );
+    }
+}
+ReactDOM.render(
+    <Search />,
+    document.getElementById('root')
+);
+</script>
 </head>
 <body>
   <div style="background-image: url(/assets/header2.png); background-position: 50% -100%;

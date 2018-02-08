@@ -12,10 +12,10 @@ class App extends React.Component {
     }
   }
 
-  getCompany(){
+  find(){
     $.ajax({
       type: "GET",
-      url:'',
+      url:'/:id',
       success: (data) => {
         console.log('ajax success', data)
       },
@@ -28,7 +28,7 @@ class App extends React.Component {
 render () {
   return (
     <div>
-      <h3>{this.state.company.name}</h3>
+      <h1>testing</h1>
     </div>
   )
 }
