@@ -8,7 +8,8 @@ class App extends React.Component {
       company: {
         id: 1,
         name: 'Facebook!'
-      }
+      },
+      graphData: []
     }
   }
 
@@ -20,15 +21,14 @@ class App extends React.Component {
       url:'/id/'+data,
       success: (data) => {
         console.log('ajax success')
-        let results = []
+        this.state.graphData = []
         for(var i = 0; i < data.length; i++){
-          // console.log(data[i].score)
           if(data[i].message.indexOf(term) >= 0){
-            results.push(data[i].score)
+            this.state.graphData.push(data[i].score)
           }
         }
-        console.log(results, 'results')
-        //filter here?
+        console.log(this.state.graphData, 'results')
+        //filter here
         //use this data for d3
       },
       error: (err) => {
@@ -40,7 +40,7 @@ class App extends React.Component {
   render () {
     return (
       <div>
-        <SVG click={this.requestData.bind(this)}/>
+        <SVG click={this.requestData.bind(this) graphData={this.state.graphData}}/>
       </div>
     )
   }
