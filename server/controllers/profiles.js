@@ -91,6 +91,47 @@ module.exports.render = (req, res) => {
 }
 //filter data by company instead of id
 //render search data scores to d3
+
+module.exports.filterDB = (req, res) => {
+  // let string = value typed in search
+  console.log(req.params.term, 'params!!!!') //==> {id: '5555'} //change to string
+  knex('tweet')
+  // .where({
+  //   id: req.params.term
+  //   // id: '5555'
+  // })
+  .select('message', 'score')
+  // models.Profile.where({ message: req.params.term
+  //   // , message contains string
+  // }).fetchAll()
+    .then(profile => {
+      if (!profile) {
+        throw profile;
+      }
+      // let resultsForGraph = [];
+      // for(var i = 0; i < profile.length; i++){
+      //   if(profile[i].message.indexOf(req.params.term) >= 0){
+      //     console.log('HERE', req.params.term)
+      //     // resultsForGraph.push(profile[i].score)
+      //   }
+      // }
+      console.log(profile[0].score, 'message inside filter')
+      //res.render all data that match string
+      res.status(200).send(profile);
+    })
+    .error(err => {
+      console.log(err, 'error inside filter')
+      res.status(500).send(err);
+    })
+    .catch(() => {
+      res.sendStatus(404);
+    });
+};
+
+
+
+
+//searches db by id.....
 module.exports.search = (req, res) => {
   // let string = value typed in search
   console.log(req.params, 'params!!!!') //==> {id: '5555'} //change to string

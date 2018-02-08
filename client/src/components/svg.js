@@ -11,13 +11,15 @@ class SVG extends React.Component {
 
   onChange(e){
     this.setState({term: e.target.value})
-    console.log(this.state.term)
-    //run fuction bound to app here as this.state.term as the param
+    // console.log(this.state.term)
     this.props.click(this.state.term)
+
+    //run fuction bound to app here as this.state.term as the param
   }
 
   click(){
-    this.onChange()
+    // this.props.click(this.state.term)
+    // this.onChange()
   }
 
   render() {
@@ -28,10 +30,10 @@ class SVG extends React.Component {
   <rect x="10" y="10" width="150" height="100"/>
 </svg>
 <p></p>
-<form>
+
 <input type="text" value={this.state.term} onChange={this.onChange.bind(this)} placeholder="search..."></input>
-<button type="submit" onClick={this.click}>clickMe</button>
-</form>
+
+<button type="submit" onClick={this.props.click}>clickMe</button>
 <h1 onClick={() => this.props.click()}>click me</h1>
 </div>
     )

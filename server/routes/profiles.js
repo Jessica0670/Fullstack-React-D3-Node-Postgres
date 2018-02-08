@@ -27,6 +27,9 @@ router.route('/:id')
   // .put(ProfileController.update)
   // .delete(ProfileController.deleteOne)
   ;
-
+  router.route('/id/:term')
+    //search db
+    .get(ProfileController.filterDB)
+    
 module.exports = router;
 // module.exports = message;

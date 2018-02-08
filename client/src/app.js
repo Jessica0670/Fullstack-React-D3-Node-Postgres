@@ -13,12 +13,23 @@ class App extends React.Component {
   }
 
   requestData(data){
-    console.log(data, 'inside app.js')
+    let term = data;
+    console.log(term, 'inside app.js')
     $.ajax({
       type: "GET",
-      url:'/'+data,
+      url:'/id/'+data,
       success: (data) => {
-        console.log('ajax success', data)
+        console.log('ajax success')
+        let results = []
+        for(var i = 0; i < data.length; i++){
+          // console.log(data[i].score)
+          if(data[i].message.indexOf(term) >= 0){
+            results.push(data[i].score)
+          }
+        }
+        console.log(results, 'results')
+        //filter here?
+        //use this data for d3
       },
       error: (err) => {
         console.log('fail ajax', err)
