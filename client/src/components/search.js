@@ -1,6 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
-class SVG extends React.Component {
+class Search extends React.Component {
   constructor(props) {
     super(props);
     console.log(props.click);
@@ -35,6 +35,7 @@ class SVG extends React.Component {
     return (
       <div>
 <p>inside svg component</p>
+
 <svg width="50" height="50">
   <rect x="10" y="10" width="150" height="100"/>
 </svg>
@@ -47,4 +48,4 @@ class SVG extends React.Component {
     )
   }
 }
-export default SVG;
+export default Search;
