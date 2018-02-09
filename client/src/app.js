@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Search from './components/search.js'
+import Search from './components/search.js';
+import SVG from './components/svg.js';
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -9,7 +10,8 @@ class App extends React.Component {
         id: 1,
         name: 'Facebook!'
       },
-      graphData: []
+      graphData: [],
+      view: 'one'
     }
   }
 
@@ -37,6 +39,17 @@ class App extends React.Component {
       }
     })
   }
+
+  renderView() {
+  if (this.state.view === 'one') {
+    return <Search click={this.requestData.bind(this)} graphData={this.state.graphData}/>
+
+  } else if (this.state.view === 'two') {
+    return <Create viewPost={this.changeView.bind(this)}/>
+  } else if(this.state.view === 'singlePost'){
+    return <Post handleComment={this.handleComment.bind(this)} upvote={this.upvote.bind(this)} data={this.state.data} postId={this.state.view} />
+  }
+}
 
   render () {
     return (

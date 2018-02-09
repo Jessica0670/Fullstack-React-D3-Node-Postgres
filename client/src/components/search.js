@@ -5,13 +5,20 @@ class Search extends React.Component {
     super(props);
     console.log(props.click);
     this.state = {
-      term: ''
+      term: '',
+      data: []
     };
   }
 
   onChange(e){
-    //update state
+    //update state to term on change
     this.setState({term: e.target.value})
+
+    // , () => {
+    //             this.afterSetStateFinished();
+    //         }
+
+
     // console.log(this.state.term)
     console.log(this.state.term, 'TERM')
     // this.buttonClick(this.state.term)
@@ -31,19 +38,28 @@ class Search extends React.Component {
     // this.onChange(this.state.term)
   }
 
+
   render() {
+
+    let svg;
+    if(this.props.graphData.length === 0) {
+      svg = <div> ...LOADING</div>
+    } else {
+      svg = this.props.graphData.map((item) => {
+        console.log(item, 'ITEMS')
+       })
+    }
+    
     return (
       <div>
-<p>inside svg component</p>
-
-<svg width="50" height="50">
-  <rect x="10" y="10" width="150" height="100"/>
-</svg>
-<p></p>
-
 <input type="text" value={this.state.term} onChange={this.onChange.bind(this)} placeholder="search..."></input>
 
 <button type="submit" onClick={this.buttonClick.bind(this)}>clickMe</button>
+
+
+<svg width="50px" height={this.props.graphData[0]}>
+  <rect x="10" y="10" width="150" height="400"/>
+</svg>
 </div>
     )
   }
