@@ -17,25 +17,15 @@ class SVG extends React.Component {
 
 
   render() {
-    let svg;
-    if(this.props.graphData.length === 0) {
-      svg = <div> ...LOADING</div>
-    } else {
-      svg = this.props.graphData.map((item) => {
-        console.log(item, 'ITEMS')
-       })
-    }
-
-    // for(var i = 0; i < this.props.graphData; i++){
+    // for(var i = 0; i < this.props.graphData.length; i++){
     //   this.state.data.push(this.props.graphData[i])
     // }
     // console.log(this.state.data, 'LKJHGBVF')
     return (
       <div>
-        {svg}
 <p>inside svg component</p>
-<svg width={this.props.graphData[0]} height="50">
-  <rect x="10" y="10" width="150" height="100"/>
+<svg width="460" height="160">
+
 </svg>
 </div>
     )

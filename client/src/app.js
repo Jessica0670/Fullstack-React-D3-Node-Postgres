@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Search from './components/search.js';
 import SVG from './components/svg.js';
+import Chart from './components/bar.js';
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -11,7 +12,7 @@ class App extends React.Component {
         name: 'Facebook!'
       },
       graphData: [],
-      view: 'one'
+      view: false
     }
   }
 
@@ -41,20 +42,21 @@ class App extends React.Component {
   }
 
   renderView() {
-  if (this.state.view === 'one') {
-    return <Search click={this.requestData.bind(this)} graphData={this.state.graphData}/>
+  if (this.state.view === true) {
+    return <Search click={this.requestData.bind(this)} view={() => this.changeView(true)} graphData={this.state.graphData}/>
 
-  } else if (this.state.view === 'two') {
-    return <Create viewPost={this.changeView.bind(this)}/>
-  } else if(this.state.view === 'singlePost'){
-    return <Post handleComment={this.handleComment.bind(this)} upvote={this.upvote.bind(this)} data={this.state.data} postId={this.state.view} />
+  } else if (this.state.view === false) {
+    return <SVG graphData={this.state.graphData}/>
   }
 }
 
   render () {
+
     return (
       <div>
-        <Search click={this.requestData.bind(this)} graphData={this.state.graphData}/>
+        <Chart />
+        <p>hi</p><p>bye</p>
+        {this.renderView()}
       </div>
     )
   }
