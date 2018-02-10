@@ -44,7 +44,7 @@ module.exports.getStream = (req, resp) => {
     place: {country: 'United States'}
   }
   // var stream = T.stream('statuses/filter', params)
-  // var stream = T.stream('statuses/sample')
+  var stream = T.stream('statuses/sample')
 
   stream.on('tweet', function (tweet) {
     //change tweet to messages?? to work with getT
@@ -67,6 +67,8 @@ module.exports.getStream = (req, resp) => {
 module.exports.render = (req, res) => {
   console.log('inside render')
   //stream data to db
+  // module.exports.getStream()
+  // module.exports.search()
   models.Profile.fetchAll() ///constraints here!!
     .then(profiles => {
       company.id = 1

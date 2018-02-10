@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Search from './components/search.js';
-import SVG from './components/svg.js';
 import Chart from './components/bar.js';
 class App extends React.Component {
   constructor(props) {
@@ -45,17 +44,22 @@ class App extends React.Component {
   if (this.state.view === true) {
     return <Search click={this.requestData.bind(this)} view={() => this.changeView(true)} graphData={this.state.graphData}/>
 
-  } else if (this.state.view === false) {
-    return <SVG graphData={this.state.graphData}/>
+  } else {
+    return (
+      <div>
+      <Search click={this.requestData.bind(this)} view={() => this.changeView(true)} graphData={this.state.graphData}/>
+      <Chart />
+    </div>
+    )
+
   }
 }
 
   render () {
+    // <React.Fragment>
 
     return (
       <div>
-        <Chart />
-        <p>hi</p><p>bye</p>
         {this.renderView()}
       </div>
     )

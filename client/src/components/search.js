@@ -49,17 +49,12 @@ class Search extends React.Component {
         console.log(item, 'ITEMS')
        })
     }
-    
+
     return (
       <div>
 <input type="text" value={this.state.term} onChange={this.onChange.bind(this)} placeholder="search..."></input>
 
-<button type="submit" onClick={this.buttonClick.bind(this)}>clickMe</button>
-
-
-<svg width="50px" height={this.props.graphData[0]}>
-  <rect x="10" y="10" width="150" height="400"/>
-</svg>
+<button type="submit" onClick={this.buttonClick.bind(this)}>search</button>
 </div>
     )
   }

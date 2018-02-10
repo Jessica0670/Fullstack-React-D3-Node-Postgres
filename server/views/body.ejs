@@ -17,16 +17,15 @@
                 <h4 style="position: center">CEO</h4>
                 </center>
 
-                <div id='root'></div>
-                <script src="/dist/bundle.js"></script>
-
                 <a href="/unlink/local" class="btn btn-default">Unlink</a>
             </div>
         </div>
 
 
         <div class="col-sm-9">
-            <div class="well">
+            <div class="well" style="height: 500px; overflow: scroll;">
+              <div id='root'></div>
+              <script src="/dist/bundle.js"></script>
               <ul style="list-style-type:none; margin-right: 30px;">
                 <% let arr = renderData.reverse() %>
               <% for(var i = 0; i < arr.length; i++){ %>

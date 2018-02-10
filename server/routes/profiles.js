@@ -30,6 +30,6 @@ router.route('/:id')
   router.route('/id/:term')
     //search db
     .get(ProfileController.filterDB)
-    
+
 module.exports = router;
 // module.exports = message;
