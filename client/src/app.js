@@ -11,11 +11,11 @@ class App extends React.Component {
         name: 'Facebook!'
       },
       graphData: [],
-      view: false
+      view: true
     }
   }
 
-  requestData(term){
+  requestData(term, view){
     this.state.graphData = []
 //term works ==> input data
     $.ajax({
@@ -32,7 +32,8 @@ class App extends React.Component {
             this.state.graphData.push(data[i].score)
           }
         }
-        console.log(this.state.graphData)
+        this.setState({view:view})
+        console.log(this.state.graphData, "GRAPH DATA LINE 35 app.js")
       },
       error: (err) => {
         console.log('fail ajax', err)
@@ -48,7 +49,7 @@ class App extends React.Component {
     return (
       <div>
       <Search click={this.requestData.bind(this)} view={() => this.changeView(true)} graphData={this.state.graphData}/>
-      <Chart />
+      <Chart data={this.state.graphData}/>
     </div>
     )
 

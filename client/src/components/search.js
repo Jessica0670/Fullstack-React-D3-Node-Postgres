@@ -6,7 +6,8 @@ class Search extends React.Component {
     console.log(props.click);
     this.state = {
       term: '',
-      data: []
+      data: [],
+      view: false
     };
   }
 
@@ -14,43 +15,32 @@ class Search extends React.Component {
     //update state to term on change
     this.setState({term: e.target.value})
 
-    // , () => {
-    //             this.afterSetStateFinished();
-    //         }
-
-
-    // console.log(this.state.term)
     console.log(this.state.term, 'TERM')
-    // this.buttonClick(this.state.term)
-    // this.props.click(this.state.term)
-
-    //run fuction bound to app here as this.state.term as the param
   }
 
   buttonClick(){
     //onclick send state to app.js
     console.log(this.state.term, 'CLICK')
+    this.setState({ view: !this.state.view})
+    this.props.click(this.state.term, this.state.view)
 
-    this.props.click(this.state.term)
-
-    // this.props.click(term)
-    // console.log(term, 'term in component button click')
-    // this.onChange(this.state.term)
+console.log(this.state.view)
   }
 
 
   render() {
 
-    let svg;
-    if(this.props.graphData.length === 0) {
-      svg = <div> ...LOADING</div>
-    } else {
-      svg = this.props.graphData.map((item) => {
-        console.log(item, 'ITEMS')
-       })
-    }
+    // let svg;
+    // if(this.props.graphData.length === 0) {
+    //   svg = <div> ...LOADING</div>
+    // } else {
+    //   svg = this.props.graphData.map((item) => {
+    //     console.log(item, 'ITEMS')
+    //    })
+    // }
 
     return (
+
       <div>
 <input type="text" value={this.state.term} onChange={this.onChange.bind(this)} placeholder="search..."></input>
 
