@@ -15,7 +15,7 @@ class Chart extends React.Component {
 
 
 
-  componentWillReceiveProps(){ //works!
+  componentWillMount(){ //works!
     // this.setState({ data: this.props.data }) //does not work
     console.log(this.props.data, 'DATA IN COMPONENT barjs from props line 15')
     let mappedData = this.props.data.map(x => {
@@ -70,9 +70,9 @@ class Chart extends React.Component {
           }
         ]
     return  (<div>
-      <p>{this.props.finalDataStructure, 'this.props.data line 50 in bar component'}</p>
+      <p>chart component</p>
       <LineChart
-        data={lineData}
+        data={this.state.finalDataStructure}
         width={800}
         height={300}
         title="Line Chart"
