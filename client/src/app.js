@@ -50,7 +50,7 @@ class App extends React.Component {
     return (
       <div>
       <Search click={this.requestData.bind(this)} view={() => this.changeView(true)} graphData={this.state.graphData}/>
-      <Chart data={this.state.graphData} graphLoader={this.graphLoader}/>
+      <Chart data={this.state.graphData} graphLoader={this.graphLoader.bind(this)}/>
     </div>
     )
 

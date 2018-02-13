@@ -24,8 +24,10 @@ class Chart extends React.Component {
     console.log(mappedData, 'testing mapped data from prop bar js line 20')
     // run function to load data to y value in barData
     this.props.graphLoader(mappedData)
-    this.setState({finalDataStructure: this.props.graphLoader(mappedData)})
-    console.log('?????',this.props.graphLoader(mappedData))
+    // this.setState({finalDataStructure: this.props.graphLoader(mappedData)})
+    this.state.finalDataStructure = this.props.graphLoader(mappedData)
+    let barData = this.state.finalDataStructure
+    console.log(this.state.finalDataStructure, '?????',barData)
   }
 
   // shouldComponentUpdate(){
@@ -59,11 +61,18 @@ class Chart extends React.Component {
     let barData = [];
     const LineChart = rd3.LineChart;
 
-
+    var lineData = [
+          {
+            name: 'series1',
+            values: [ { x: 0, y: 20 }, { x: 1, y: 30 }, { x: 2, y: 10 }, { x: 3, y: 5 }, { x: 4, y: 8 }, { x: 5, y: 15 }, { x: 6, y: 10 } ],
+            strokeWidth: 3,
+            strokeDashArray: "5,5",
+          }
+        ]
     return  (<div>
-      <p>{this.props.data, 'this.props.data line 50 in bar component'}</p>
+      <p>{this.props.finalDataStructure, 'this.props.data line 50 in bar component'}</p>
       <LineChart
-        data={barData}
+        data={lineData}
         width={800}
         height={300}
         title="Line Chart"
