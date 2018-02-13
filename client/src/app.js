@@ -11,7 +11,8 @@ class App extends React.Component {
         name: 'Facebook!'
       },
       graphData: [],
-      view: true
+      view: true,
+      finalDataStructure: []//dont need
     }
   }
 
@@ -72,7 +73,6 @@ class App extends React.Component {
       a.y = item
       barData.values.push(a)
     })
-    console.log(barData, 'final data structure app js...')
     return barData
     // this.setState({barData: barData})
   }

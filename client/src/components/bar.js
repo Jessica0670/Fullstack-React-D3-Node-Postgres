@@ -8,7 +8,8 @@ class Chart extends React.Component {
     super(props);
     this.state = {
       data: [],
-      barData: []
+      barData: [],
+      finalDataStructure: []
     };
   }
 
@@ -23,7 +24,17 @@ class Chart extends React.Component {
     console.log(mappedData, 'testing mapped data from prop bar js line 20')
     // run function to load data to y value in barData
     this.props.graphLoader(mappedData)
+    this.setState({finalDataStructure: this.props.graphLoader(mappedData)})
+    console.log('?????',this.props.graphLoader(mappedData))
   }
+
+  // shouldComponentUpdate(){
+  //   if(this.state.finalDataStructure.length > 0){
+  //     let final = this.state.finalDataStructure
+  //     console.log(final, "FINAL")
+  //   }
+  //
+  // }
   //
   // //create function to load data to y value in barData
   //   graphLoader(graphDataArray){
