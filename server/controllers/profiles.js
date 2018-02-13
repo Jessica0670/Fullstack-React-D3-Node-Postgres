@@ -6,14 +6,7 @@ const helper = require('../controllers/profiles.js')
 const knex  = require('knex')(require('../../knexfile'));
 var sentiment = require('sentiment');
 
-var T = new Twit({
-  consumer_key:         'hPwQLGT14IDfrhKJ6FtjVYni7',
-  consumer_secret:      'RE1jam20D7J4whwh94TT1vPddPfyhq8Gye5DQZAoXqFI5fdO3t',
-  access_token:         '957040105226555392-VCJq4UtXbn5xqG8jsWUHSm4zFKMzuc0',
-  access_token_secret:  'DrGtYziXg38BaNmvlj2w9JkaXQffciScncga0ANSSJwcF',
-  timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
-                                  //can i use this for storing data every 5 min
-})
+
 
 let company = {};
 let messages = [];

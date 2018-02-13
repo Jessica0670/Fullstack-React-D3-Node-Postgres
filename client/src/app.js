@@ -12,13 +12,11 @@ class App extends React.Component {
       },
       graphData: [],
       view: true,
-      finalDataStructure: []//dont need
     }
   }
 
   requestData(term, view){
     this.state.graphData = []
-//term works ==> input data
     $.ajax({
       type: "GET",
       url:'/id/'+term,
@@ -29,12 +27,10 @@ class App extends React.Component {
           //allow # symbol when searching
           //join # with closest word to the right when splitting
           if(data[i].message.indexOf(term) >= 0){
-            console.log(data[i])
             this.state.graphData.push(data[i].score)
           }
         }
         this.setState({view:view})
-        console.log(this.state.graphData, "GRAPH DATA LINE 35 app.js")
       },
       error: (err) => {
         console.log('fail ajax', err)
@@ -43,19 +39,18 @@ class App extends React.Component {
   }
 
   renderView() {
-  if (this.state.view === true) {
-    return <Search click={this.requestData.bind(this)} view={() => this.changeView(true)} graphData={this.state.graphData}/>
+    if (this.state.view === true) {
+      return <Search click={this.requestData.bind(this)} view={() => this.changeView(true)} graphData={this.state.graphData}/>
 
-  } else {
-    return (
-      <div>
-      <Search click={this.requestData.bind(this)} view={() => this.changeView(true)} graphData={this.state.graphData}/>
-      <Chart data={this.state.graphData} graphLoader={this.graphLoader.bind(this)}/>
-    </div>
-    )
-
+    } else {
+      return (
+        <div>
+        <Search click={this.requestData.bind(this)} view={() => this.changeView(true)} graphData={this.state.graphData}/>
+        <Chart data={this.state.graphData} graphLoader={this.graphLoader.bind(this)}/>
+      </div>
+      )
+    }
   }
-}
 
 //create function to load data to y value in barData
   graphLoader(graphDataArray){
@@ -66,7 +61,6 @@ class App extends React.Component {
       }
       final.name = "Series A"
       final.values = []
-      console.log(graphDataArray, 'graph data array l 32 barjs')
       let count = 1
       graphDataArray.forEach(item => {
         let a = {}
@@ -76,12 +70,9 @@ class App extends React.Component {
       })
       barData.push(final)
       return barData
-    // this.setState({barData: barData})
   }
 
   render () {
-    // <React.Fragment>
-
     return (
       <div>
         {this.renderView()}
