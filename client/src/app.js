@@ -49,12 +49,33 @@ class App extends React.Component {
     return (
       <div>
       <Search click={this.requestData.bind(this)} view={() => this.changeView(true)} graphData={this.state.graphData}/>
-      <Chart data={this.state.graphData}/>
+      <Chart data={this.state.graphData} graphLoader={this.graphLoader}/>
     </div>
     )
 
   }
 }
+
+//create function to load data to y value in barData
+  graphLoader(graphDataArray){
+    if(graphDataArray.length < 1){
+      return 'empty data line 30 barjs'
+    }
+    let barData = [];
+    barData.name = "Series A"
+    barData.values = []
+    console.log(graphDataArray, 'graph data array l 32 barjs')
+    let count = 1
+    graphDataArray.forEach(item => {
+      let a = {}
+      a.x = count++;
+      a.y = item
+      barData.values.push(a)
+    })
+    console.log(barData, 'final data structure app js...')
+    return barData
+    // this.setState({barData: barData})
+  }
 
   render () {
     // <React.Fragment>

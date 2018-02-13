@@ -7,9 +7,12 @@ class Chart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: []
+      data: [],
+      barData: []
     };
   }
+
+
 
   componentWillReceiveProps(){ //works!
     // this.setState({ data: this.props.data }) //does not work
@@ -19,26 +22,26 @@ class Chart extends React.Component {
     })
     console.log(mappedData, 'testing mapped data from prop bar js line 20')
     // run function to load data to y value in barData
-    graphLoader(mappedData)
+    this.props.graphLoader(mappedData)
   }
-
-  //create function to load data to y value in barData
-    graphLoader(graphDataArray){
-      if(graphDataArray.length < 1){
-        return 'empty data line 28 barjs'
-      }
-      barData.name = "Company"
-      barData.values = []
-      console.log(graphDataArray, 'graph data array l 32 barjs')
-      let count = 1
-      graphDataArray.forEach(item => {
-        let a = {}
-        a.x = count++;
-        a.y = item
-        barData.values.push(a)
-      })
-      return barData
-    }
+  //
+  // //create function to load data to y value in barData
+  //   graphLoader(graphDataArray){
+  //     if(graphDataArray.length < 1){
+  //       return 'empty data line 28 barjs'
+  //     }
+  //     barData.name = "Company"
+  //     barData.values = []
+  //     console.log(graphDataArray, 'graph data array l 32 barjs')
+  //     let count = 1
+  //     graphDataArray.forEach(item => {
+  //       let a = {}
+  //       a.x = count++;
+  //       a.y = item
+  //       barData.values.push(a)
+  //     })
+  //     return barData
+  //   }
 
 
   render() {
