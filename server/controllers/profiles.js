@@ -6,30 +6,22 @@ const helper = require('../controllers/profiles.js')
 const knex  = require('knex')(require('../../knexfile'));
 var sentiment = require('sentiment');
 
-
+var T = new Twit({
+  consumer_key:         'hPwQLGT14IDfrhKJ6FtjVYni7',
+  consumer_secret:      'RE1jam20D7J4whwh94TT1vPddPfyhq8Gye5DQZAoXqFI5fdO3t',
+  access_token:         '957040105226555392-VCJq4UtXbn5xqG8jsWUHSm4zFKMzuc0',
+  access_token_secret:  'DrGtYziXg38BaNmvlj2w9JkaXQffciScncga0ANSSJwcF',
+  timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
+                                  //can i use this for storing data every 5 min
+})
 
 let company = {};
 let messages = [];
 let res = []; //for post data
 let dummyMessages = [];
-//export variable with api data
-// let params = { q: '#facebook', count: 100 }
 
-
-
-//get twitter data and send to db
-// module.exports.getT = (req, resp) => {
-// T.get('search/tweets', params, function(error, data , response) {
-//     let tweets = data.statuses;
-//       console.log(tweets[0].text)
-//       tweets.forEach(tweet => {
-//         messages.push(tweet)
-//       })
-//       console.log(messages[0].text)
-//       tweetSeed.seed(knex, messages)
-// });
-// }
 //STREAM twitter data and send to db
+//also creates sentiment and runs seen function
 module.exports.getStream = (req, resp) => {
   let params = {
     track: 'facebook,Facebook,#facebook,#Facebook',
@@ -40,13 +32,10 @@ module.exports.getStream = (req, resp) => {
   var stream = T.stream('statuses/sample')
 
   stream.on('tweet', function (tweet) {
-    //change tweet to messages?? to work with getT
-    // console.log(tweet)
+
     let phrase = tweet.text
     sentiment(phrase, function (err, result) {
         sentiResponse = 'sentiment(' + phrase + ') === ' + result.score;
-        // console.log(result.score, 'inside sentiment')
-        // res.send(response);
         tweetSeed.seed(knex, tweet, result.score)
 
     });
@@ -74,6 +63,16 @@ module.exports.render = (req, res) => {
           renderData.push(item.attributes)
         }
       })
+      console.log(renderData, 'render DATA line 66')
+      //renderData ==>
+      // [{ id: 33015,
+      // message: 'cock up your bumper',
+      // username: '__nketiah',
+      // time: 2018-02-14T00:24:24.000Z,
+      // score: '-5',
+      // companyId: 1 }]
+
+      //sends data to ejs
       res.render('body.ejs', {renderData: renderData, company: company})
     })
     .catch(err => {
@@ -83,18 +82,15 @@ module.exports.render = (req, res) => {
     });
 
 }
-//filter data by company instead of id
-//render search data scores to d3
 
 module.exports.filterDB = (req, res) => {
   // let string = value typed in search
-  console.log(req.params.term, 'params!!!!') //==> {id: '5555'} //change to string
   knex('tweet')
   // .where({
   //   id: req.params.term
   //   // id: '5555'
   // })
-  .select('message', 'score')
+  .select('message', 'score', 'time')
   // models.Profile.where({ message: req.params.term
   //   // , message contains string
   // }).fetchAll()
@@ -102,14 +98,7 @@ module.exports.filterDB = (req, res) => {
       if (!profile) {
         throw profile;
       }
-      // let resultsForGraph = [];
-      // for(var i = 0; i < profile.length; i++){
-      //   if(profile[i].message.indexOf(req.params.term) >= 0){
-      //     console.log('HERE', req.params.term)
-      //     // resultsForGraph.push(profile[i].score)
-      //   }
-      // }
-      console.log(profile[0].score, 'message inside filter')
+      console.log(profile[0], 'message inside filter')
       //res.render all data that match string
       res.status(200).send(profile);
     })
@@ -127,8 +116,7 @@ module.exports.filterDB = (req, res) => {
 
 //searches db by id.....
 module.exports.search = (req, res) => {
-  // let string = value typed in search
-  console.log(req.params, 'params!!!!') //==> {id: '5555'} //change to string
+  console.log(req.params, 'params!!!!')
   models.Profile.where({ id: req.params.id
     // , message contains string
   }).fetchAll()
@@ -152,23 +140,15 @@ module.exports.search = (req, res) => {
 //get and filter messages from the db!! works
 module.exports.getAll = (req, res) => {
   console.log('inside getAll')
-  // console.log(messages)//works
   models.Profile.where({companyId: 1}).fetchAll( //filter api data here from pg
-    //select * from tweet where (with related tweet)
     {withRelated:['company']}
-  ) ///constraints here!!
+  )
     .then(profiles => {
-      // console.log(profiles.models[0].attributes)
       let companyTable = []
       profiles.models.forEach(item => {
-        // console.log(item.attributes, 'llll')
         companyTable.push(item.attributes)
         dummyMessages.push(item.attributes.message)
       })
-      console.log(dummyMessages, 'dummy') //company objects/table
-      //change to api data?
-      // res.render('company.ejs', {messages: dummyMessages, company: company})
-      //^^^^^^ not working yet to filter for rendering
     })
     .catch(err => {
       // This code indicates an outside service (the database) did not respond in time
