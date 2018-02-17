@@ -42,14 +42,15 @@ class App extends React.Component {
         console.log('ajax success') //data = array of messages, times and scores
         for(var i = 0; i < data.length; i++){
           //FILTER TIME HERE? or helper function
-          const dateToFormat = new Date(data[i].time)
-          dateToFormat.toString()
+          const dateToFormat = data[i].time
+          let score = data[i].score
+          // dateToFormat.toString()
           // console.log(dateToFormat, 'DATE') //array of date strings
           //FILTERING TIME TO 5 MIN
           let filterTime = (dateToFormat) => {
           dateToFormat = dateToFormat.toString()
           let arr = dateToFormat.split("").reverse();
-          let cut = arr.indexOf(":") -2
+          let cut = arr.indexOf(":") + 1
           let x = []
           let piece = arr.slice(cut).reverse()
           let cut1 = arr.indexOf(":") - 1
@@ -58,13 +59,62 @@ class App extends React.Component {
 
           array[1] = 5 * Math.round( array[1] / 5 );
 
-          return array.join(":")
+          return array.join(":") //single time elem ==> 2-14T00:25
+
+          //add up scores for similar times//
+
+
+
           }
 
-          console.log(filterTime(dateToFormat), 'DATA')
+
+
+
+          let filter5 = filterTime(dateToFormat) //TIMES
+
+          //date is connected to score!!
+          //filter to array...
+          // console.log(filter5, score, 'DATA')
+          let chunkArray = [];
+            let item = {}
+          let f = () => {
+
+
+            item.time = filter5;
+            item.score = 0;
+            let chunking = (filter5, score) => {
+              // chunkArray.push(item)
+              // console.log(chunkArray, item)
+              // for(var i = 0; i < chunkArray.length; i++){
+                // if(filter5 === item.time){
+                  // console.log(filter5, item.time)
+                  // console.log('true')
+                  item.score += parseInt(score)
+                  // console.log(filter5, item.time, item.score)
+                  // console.log(score, chunkArray, 'ARRAY', item, "ITEM")
+                // }
+                chunkArray.push(item)
+                // else {
+                //   console.log(item)
+                //   chunkArray.push(item)
+                //   item.time = filter5
+                //   item.score = parseInt(score)
+                // }
+
+              // }
+              console.log(chunkArray)
+
+              return chunkArray
+            }
+            chunking(filter5, score)
+          }
+f()
+          // console.log(chunking(filter5, score), "TEST VALUES of chunking", score)
           //need to split array and check if each word matches the term instead
           //allow # symbol when searching?
           //join # with closest word to the right when splitting
+
+          //add and push chunks down here!
           if(data[i].message.indexOf(term) >= 0){
             this.state.graphData.push(data[i].score)
           }
