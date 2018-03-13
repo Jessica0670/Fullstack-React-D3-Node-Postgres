@@ -17,19 +17,12 @@ app.set('views', path.join(__dirname, 'views'))
 
 router.route('/')
 .get(ProfileController.render) //running methods from controllers/profiles.js
-// .get(ProfileController.render)
-
-// router.route('/api')
 router.route('/:id')
   //search db
   .get(ProfileController.search)
-
-  // .put(ProfileController.update)
-  // .delete(ProfileController.deleteOne)
   ;
   router.route('/id/:term')
     //search db
     .get(ProfileController.filterDB)
 
 module.exports = router;
-// module.exports = message;

@@ -7,12 +7,11 @@ const knex  = require('knex')(require('../../knexfile'));
 var sentiment = require('sentiment');
 
 var T = new Twit({
-  consumer_key:         'hPwQLGT14IDfrhKJ6FtjVYni7',
-  consumer_secret:      'RE1jam20D7J4whwh94TT1vPddPfyhq8Gye5DQZAoXqFI5fdO3t',
-  access_token:         '957040105226555392-VCJq4UtXbn5xqG8jsWUHSm4zFKMzuc0',
-  access_token_secret:  'DrGtYziXg38BaNmvlj2w9JkaXQffciScncga0ANSSJwcF',
-  timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
-                                  //can i use this for storing data every 5 min
+  consumer_key:         '',
+  consumer_secret:      '',
+  access_token:         '',
+  access_token_secret:  '',
+  timeout_ms:           60*1000,
 })
 
 let company = {};
@@ -63,15 +62,6 @@ module.exports.render = (req, res) => {
           renderData.push(item.attributes)
         }
       })
-      console.log(renderData, 'render DATA line 66')
-      //renderData ==>
-      // [{ id: 33015,
-      // message: 'cock up your bumper',
-      // username: '__nketiah',
-      // time: 2018-02-14T00:24:24.000Z,
-      // score: '-5',
-      // companyId: 1 }]
-
       //sends data to ejs
       res.render('body.ejs', {renderData: renderData, company: company})
     })
@@ -157,14 +147,6 @@ module.exports.getAll = (req, res) => {
     });
 };
 
-// module.exports.postData = (req, res) => {
-//   // console.log('here')
-//   // message.push(this.getT());
-//   console.log('here')
-//   console.log('ADDED!!')
-//   console.log(messages)
-//
-// }
 
 module.exports.addTweet = (req, res) => {
   console.log('ADDED!!')
